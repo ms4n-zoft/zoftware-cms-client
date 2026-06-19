@@ -1,23 +1,28 @@
 ---
 import "../styles/global.css";
-import { themes, themeStyle } from "../lib/themeEngine";
+import { appTheme, themes, themeStyle } from "../lib/themeEngine";
 
 type Props = {
   title: string;
   description: string;
+  useActiveTheme?: boolean;
 };
 
-const { title, description } = Astro.props;
-const defaultTheme = themes[0];
+const { title, description, useActiveTheme = false } = Astro.props;
+const defaultTheme = useActiveTheme ? themes[0] : appTheme;
 const themeBootScript = `
 (() => {
   const themes = ${JSON.stringify(themes)};
+  const appTheme = ${JSON.stringify(appTheme)};
   const key = "zoftware.activeThemeId";
   const previewThemeId = new URLSearchParams(window.location.search).get("previewTheme");
+  const useActiveTheme = ${JSON.stringify(useActiveTheme)};
 
   function applySelectedTheme() {
     const selectedId = previewThemeId || window.localStorage.getItem(key) || themes[0].id;
-    const theme = themes.find((item) => item.id === selectedId) || themes[0];
+    const theme = useActiveTheme
+      ? themes.find((item) => item.id === selectedId) || themes[0]
+      : appTheme;
     const vars = {
       "--color-background": theme.colors.background,
       "--color-text": theme.colors.text,
@@ -55,7 +60,7 @@ const themeBootScript = `
 
   applySelectedTheme();
   window.addEventListener("storage", (event) => {
-    if (previewThemeId) {
+    if (!useActiveTheme || previewThemeId) {
       return;
     }
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CMS-style white-label Zoftware client",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "NODE_ENV=development astro dev",
     "build": "astro build",
     "preview": "astro preview"
   },
@@ -19,6 +19,9 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0"
+    "@playwright/test": "^1.60.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
   }
 }
