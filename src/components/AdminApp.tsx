@@ -7,20 +7,7 @@ import {
   setByPath,
   storeSiteDraft,
 } from "../lib/contentOverrides";
-import {
-  applyTheme,
-  getStoredThemeId,
-  resolveTheme,
-  storeThemeId,
-  type ThemeConfig,
-} from "../lib/themeEngine";
-
-type SiteContent = typeof import("../data/site/zoftware.json");
-
-type AdminAppProps = {
-  site: SiteContent;
-  themes: readonly ThemeConfig[];
-};
+import { applyTheme, appTheme, getStoredThemeId, resolveThemePackage, storeThemeId, themePackages } from "../lib/themeEngine";
 
 type EditorField = {
   label: string;
@@ -33,94 +20,83 @@ type EditorField = {
 const editorFields: EditorField[] = [
   {
     label: "Brand name",
-    path: "brand.name",
-    help: "The name visitors see for this version of the site.",
+    path: "landing.brand.name",
+    help: "Primary white-label brand name for this package.",
   },
   {
     label: "Logo image path",
-    path: "brand.logo",
-    help: "Paste the logo image link. Leave blank to use the theme logo.",
-    placeholder: "/static/full_logo.svg",
+    path: "landing.brand.logo",
+    help: "Optional override logo. Leave blank to use the package logo.",
+    placeholder: "/static/zoftwarehub-logo.svg",
   },
   {
-    label: "Logo alt text",
-    path: "brand.logoAlt",
-    help: "Accessibility label for the logo image.",
+    label: "Announcement bar",
+    path: "landing.announcement.text",
+    help: "Short message above the navigation.",
   },
   {
-    label: "Hero headline",
-    path: "hero.headline",
-    help: "Primary first-screen headline.",
+    label: "Hero headline line 1",
+    path: "landing.hero.headlineLines.0",
+    help: "First line of the hero headline.",
+  },
+  {
+    label: "Hero headline line 2",
+    path: "landing.hero.headlineLines.1",
+    help: "Second line of the hero headline.",
+  },
+  {
+    label: "Hero headline line 3",
+    path: "landing.hero.headlineLines.2",
+    help: "Third line of the hero headline.",
+  },
+  {
+    label: "Hero description",
+    path: "landing.hero.description",
+    help: "Supporting copy below the hero headline.",
     multiline: true,
   },
   {
     label: "Primary CTA",
-    path: "hero.primaryCta",
-    help: "Main hero button label.",
+    path: "landing.navigation.primaryCtaLabel",
+    help: "Main navigation CTA label.",
   },
   {
-    label: "Secondary CTA",
-    path: "hero.secondaryCta",
-    help: "Secondary hero button label.",
+    label: "Catalog heading",
+    path: "landing.catalog.heading",
+    help: "Heading above the software grid.",
   },
   {
-    label: "Hero visual title",
-    path: "hero.featureCards.0.title",
-    help: "Title in the right-side hero report card.",
-  },
-  {
-    label: "Hero visual subtitle",
-    path: "hero.featureCards.0.subtitle",
-    help: "Small line below the hero report title.",
-  },
-  {
-    label: "Smart Suite heading",
-    path: "sections.smartSuite.heading",
-    help: "Heading for the first post-hero section.",
-  },
-  {
-    label: "Smart Suite description",
-    path: "sections.smartSuite.description",
-    help: "Supporting copy below the Smart Suite heading.",
+    label: "CTA description",
+    path: "landing.cta.description",
+    help: "Supporting copy in the final call-to-action section.",
     multiline: true,
-  },
-  {
-    label: "Impact section heading",
-    path: "sections.decisionImpact.heading",
-    help: "Heading above the metric cards.",
-    multiline: true,
-  },
-  {
-    label: "Trusted solutions heading",
-    path: "sections.trustedSolutions.heading",
-    help: "Heading above the industry chips.",
   },
 ];
 
-export default function AdminApp({ site, themes }: AdminAppProps) {
+export default function AdminApp() {
   const [activePanel, setActivePanel] = useState<"theme" | "editor">("theme");
-  const [activeThemeId, setActiveThemeId] = useState(themes[0].id);
+  const [activeThemeId, setActiveThemeId] = useState(themePackages[0].id);
   const [draft, setDraft] = useState<Record<string, unknown>>({});
   const previewRef = useRef<HTMLIFrameElement | null>(null);
-  const defaultTheme = themes[0];
+  const defaultTheme = appTheme;
 
   const activeTheme = useMemo(
-    () => themes.find((theme) => theme.id === activeThemeId) ?? themes[0],
-    [activeThemeId, themes],
+    () => themePackages.find((theme) => theme.id === activeThemeId) ?? themePackages[0],
+    [activeThemeId],
   );
-  const effectiveSite = useMemo(() => mergeDeep(site, draft), [draft, site]);
+  const effectiveContent = useMemo(() => mergeDeep(activeTheme, draft), [activeTheme, draft]);
 
   useEffect(() => {
-    const storedTheme = resolveTheme(getStoredThemeId());
+    const storedTheme = resolveThemePackage(getStoredThemeId());
     setActiveThemeId(storedTheme.id);
     setDraft(readSiteDraft());
-    applyTheme(defaultTheme);
-  }, [defaultTheme]);
+    applyTheme(appTheme);
+  }, []);
 
-  function updateTheme(theme: ThemeConfig) {
+  function updateTheme(theme: ThemePackage) {
     setActiveThemeId(theme.id);
     storeThemeId(theme.id);
-    applyTheme(defaultTheme);
+    applyTheme(appTheme);
     syncPreviewStorage(theme.id, draft);
   }
 
@@ -164,7 +140,7 @@ export default function AdminApp({ site, themes }: AdminAppProps) {
             onClick={() => setActivePanel("theme")}
           >
             <small>01</small>
-            Theming
+            Package
           </button>
           <button
             type="button"
@@ -172,7 +148,7 @@ export default function AdminApp({ site, themes }: AdminAppProps) {
             onClick={() => setActivePanel("editor")}
           >
             <small>02</small>
-            Editor
+            Content
           </button>
         </nav>
       </aside>
@@ -181,17 +157,17 @@ export default function AdminApp({ site, themes }: AdminAppProps) {
         <section className="admin-panel">
           <div className="admin-panel__header">
             <p>{activePanel === "theme" ? "Step one" : "Step two"}</p>
-            <h1>{activePanel === "theme" ? "Choose the client theme." : "Edit static landing content."}</h1>
+            <h1>{activePanel === "theme" ? "Choose the site package." : "Edit landing content."}</h1>
             <span>
               {activePanel === "theme"
-                ? "Pick the look and feel for this client site: colors, typography, logo style, and corner shape."
-                : "Update the words and images that appear on the landing page."}
+                ? "A package controls layout, colors, typography, and the landing page structure together."
+                : "Update the package copy without changing the visual direction."}
             </span>
           </div>
 
           {activePanel === "theme" ? (
             <div className="theme-grid">
-              {themes.map((theme) => (
+              {themePackages.map((theme) => (
                 <button
                   type="button"
                   className={`theme-card ${theme.id === activeThemeId ? "is-selected" : ""}`}
@@ -208,11 +184,9 @@ export default function AdminApp({ site, themes }: AdminAppProps) {
                     <i style={{ background: theme.colors.brandDark }} />
                     <i style={{ background: theme.colors.panelSoft }} />
                   </span>
+                  <span className="theme-card__meta">{theme.description}</span>
                   <span className="theme-card__meta">
-                    {theme.typography.heading.includes("Lora") ? "Lora serif headings" : "Zoftware replica typography"}
-                  </span>
-                  <span className="theme-card__meta">
-                    {theme.layout.radius.mode === "sharp" ? "Sharp corners" : "Rounded corners"}
+                    {theme.typography.heading.includes("Syne") ? "Syne + Manrope" : "Custom font system"}
                   </span>
                 </button>
               ))}
@@ -227,14 +201,14 @@ export default function AdminApp({ site, themes }: AdminAppProps) {
                   </span>
                   {field.multiline ? (
                     <textarea
-                      value={String(getByPath(effectiveSite, field.path) ?? "")}
+                      value={String(getByPath(effectiveContent, field.path) ?? "")}
                       placeholder={field.placeholder}
                       rows={3}
                       onChange={(event) => updateField(field.path, event.target.value)}
                     />
                   ) : (
                     <input
-                      value={String(getByPath(effectiveSite, field.path) ?? "")}
+                      value={String(getByPath(effectiveContent, field.path) ?? "")}
                       placeholder={field.placeholder}
                       onChange={(event) => updateField(field.path, event.target.value)}
                     />

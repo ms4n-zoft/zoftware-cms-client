@@ -1,13 +1,11 @@
 ---
 import AdminApp from "../components/AdminApp";
-import site from "../data/site/zoftware.json";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { themes } from "../lib/themeEngine";
 ---
 
 <BaseLayout
   title="Zoftware Admin"
   description="Admin page for choosing a theme and editing landing page content."
 >
-  <AdminApp client:load site={site} themes={themes} />
+  <AdminApp client:load />
 </BaseLayout>

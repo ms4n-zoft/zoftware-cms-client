@@ -1,16 +1,65 @@
-import editorialTheme from "../data/themes/editorial.json";
-import monochromeTheme from "../data/themes/monochrome.json";
-import zoftwareTheme from "../data/themes/zoftware.json";
+import zoftwareHubThemePackage from "../data/theme-packages/zoftware-hub.json";
+import violetAtlasThemePackage from "../data/theme-packages/violet-atlas.json";
 
 export const THEME_STORAGE_KEY = "zoftware.activeThemeId";
 export const THEME_CHANGE_EVENT = "zoftware:theme-change";
 
-export const themes = [zoftwareTheme, editorialTheme, monochromeTheme] as const;
+export const themePackages = [zoftwareHubThemePackage, violetAtlasThemePackage] as const;
 
-export type ThemeConfig = (typeof themes)[number];
+export type ThemePackage = (typeof themePackages)[number];
+export type ThemeConfig = Omit<ThemePackage, "landing">;
+
+export const themes: readonly ThemeConfig[] = themePackages.map(({ landing: _landing, ...theme }) => theme);
+
+export const appTheme: ThemeConfig = {
+  id: "zoftware-app",
+  name: "Zoftware App",
+  description: "Default internal app theme",
+  character: "Clean product UI",
+  colors: {
+    background: "#ffffff",
+    text: "#0a0a0a",
+    mutedText: "#575757",
+    softText: "#969696",
+    brand: "#1447e6",
+    brandDark: "#2c4e9b",
+    brandSoft: "#eff6ff",
+    border: "#e6e6e6",
+    panel: "#ffffff",
+    panelSoft: "#f9f9fc",
+    heroStart: "#e6efff",
+    accent: "#155dfc",
+    success: "#00a63e",
+  },
+  typography: {
+    body: "\"Poppins\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    heading: "\"Poppins\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    headingLabel: "Poppins",
+    bodyLabel: "Poppins",
+  },
+  assets: {
+    logo: "/static/full_logo.svg",
+    miniLogo: "/static/mini_logo.svg",
+    ratingStar: "/static/rating_star.svg",
+    trustedVendorPath: "/v2/trusted-vendors",
+  },
+  layout: {
+    maxWidth: "1212px",
+    radius: {
+      mode: "rounded",
+      pill: "80px",
+      panel: "16px",
+      card: "12px",
+    },
+  },
+};
 
 export function resolveTheme(themeId?: string | null): ThemeConfig {
   return themes.find((theme) => theme.id === themeId) ?? themes[0];
+}
+
+export function resolveThemePackage(themeId?: string | null): ThemePackage {
+  return themePackages.find((theme) => theme.id === themeId) ?? themePackages[0];
 }
 
 export function getStoredThemeId() {

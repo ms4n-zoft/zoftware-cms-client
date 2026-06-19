@@ -2,27 +2,25 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import {
   ArrowRightIcon,
   CheckCircleIcon,
-  CompareIcon,
   FileIcon,
   SearchIcon,
   SparkIcon,
   TargetIcon,
 } from "./icons";
 import parentCategories from "../data/catalog/parentCategories.json";
-import site from "../data/site/zoftware.json";
 import {
   applyTheme,
-  resolveTheme,
+  appTheme,
+  resolveThemePackage,
   storeThemeId,
-  themes,
-  type ThemeConfig,
+  themePackages,
+  type ThemePackage,
 } from "../lib/themeEngine";
 import { storeSiteDraft } from "../lib/contentOverrides";
 
 const ONBOARDING_STORAGE_KEY = "zoftware.vendorOnboarding";
 
 type ServiceId = "smart-search" | "rfp-service" | "ai-chatbot" | "rag-knowledge-base";
-type LayoutId = "strategy" | "marketplace" | "advisor";
 
 type OnboardingState = {
   vendorName: string;
@@ -34,10 +32,7 @@ type OnboardingState = {
   services: ServiceId[];
   categorySlugs: string[];
   brandName: string;
-  subdomain: string;
-  launchWindow: string;
   themeId: string;
-  layoutId: LayoutId;
 };
 
 const initialState: OnboardingState = {
@@ -50,17 +45,14 @@ const initialState: OnboardingState = {
   services: ["smart-search", "rfp-service"],
   categorySlugs: parentCategories.categories.slice(0, 2).map((category) => category.weburl),
   brandName: "",
-  subdomain: "",
-  launchWindow: "30 days",
-  themeId: themes[0].id,
-  layoutId: "strategy",
+  themeId: themePackages[0].id,
 };
 
 const serviceOptions = [
   {
     id: "smart-search",
     title: "Smart Search",
-    description: "Guided software discovery with ranked vendor matches.",
+    description: "Guided software discovery with ranked distributor matches.",
     badge: "Discovery",
     icon: SearchIcon,
   },
@@ -81,43 +73,17 @@ const serviceOptions = [
   {
     id: "rag-knowledge-base",
     title: "RAG Knowledge Base",
-    description: "Answer engine grounded in uploaded vendor and category knowledge.",
+    description: "Answer engine grounded in uploaded distributor and category knowledge.",
     badge: "Knowledge",
     icon: TargetIcon,
   },
 ] as const;
 
-const layoutOptions = [
-  {
-    id: "strategy",
-    title: "Strategy-led",
-    description: "Start with buyer goals, roadmap, and implementation fit.",
-  },
-  {
-    id: "marketplace",
-    title: "Marketplace",
-    description: "Prioritize category browsing, product lists, and comparison.",
-  },
-  {
-    id: "advisor",
-    title: "Advisor desk",
-    description: "Lead buyers toward expert calls and assisted shortlists.",
-  },
-] as const;
+const steps = ["Workspace", "Categories", "Services", "Theme Package"] as const;
 
-const recommendedThemeByLayout: Record<LayoutId, string> = {
-  strategy: "zoftware",
-  marketplace: "monochrome",
-  advisor: "editorial",
-};
-
-const steps = [
-  "Workspace",
-  "Categories",
-  "Services",
-  "Brand",
-  "Theme",
-] as const;
+// The selector always renders as a balanced 2x2 grid. Real packages fill the
+// first slots; remaining slots show "coming soon" placeholders.
+const MIN_THEME_SLOTS = 4;
 
 export default function OnboardingGate() {
   const [ready, setReady] = useState(false);
@@ -139,7 +105,7 @@ export default function OnboardingGate() {
       setState(initialState);
     }
 
-    applyTheme(themes[0]);
+    applyTheme(appTheme);
     setReady(true);
   }, []);
 
@@ -153,19 +119,18 @@ export default function OnboardingGate() {
         state={state}
         onChange={setState}
         onComplete={(finalState) => {
-          const activeTheme = resolveTheme(finalState.themeId);
-          const brandName = finalState.brandName || finalState.vendorName || site.brand.name;
+          const activeTheme = resolveThemePackage(finalState.themeId);
+          const brandName = finalState.brandName || finalState.vendorName || activeTheme.landing.brand.name;
 
           storeThemeId(activeTheme.id);
           applyTheme(activeTheme);
           storeSiteDraft({
-            brand: {
-              name: brandName,
-              ...(finalState.logoUrl ? { logo: finalState.logoUrl } : {}),
-              logoAlt: `${brandName} logo`,
-            },
-            hero: {
-              headline: `Launch ${brandName} as a software buying hub. Ready for your customers.`,
+            landing: {
+              brand: {
+                name: brandName,
+                ...(finalState.logoUrl ? { logo: finalState.logoUrl } : {}),
+                logoAlt: `${brandName} logo`,
+              },
             },
           });
           window.localStorage.setItem(
@@ -188,7 +153,7 @@ export default function OnboardingGate() {
                   window.localStorage.removeItem(ONBOARDING_STORAGE_KEY);
                   setState(initialState);
                   setRestartPromptOpen(false);
-                  applyTheme(themes[0]);
+                  applyTheme(appTheme);
                 }}
               >
                 Restart onboarding
@@ -219,14 +184,18 @@ function OnboardingFlow({
 }) {
   const [stepIndex, setStepIndex] = useState(0);
   const [fullPreviewOpen, setFullPreviewOpen] = useState(false);
-  const activeTheme = useMemo(() => resolveTheme(state.themeId), [state.themeId]);
-  const defaultTheme = themes[0];
+  const activeTheme = useMemo(() => resolveThemePackage(state.themeId), [state.themeId]);
+  const defaultTheme = appTheme;
   const canContinue =
     stepIndex === 1
       ? state.categorySlugs.length > 0
       : stepIndex === 2
         ? state.services.length > 0
         : true;
+
+  useEffect(() => {
+    applyTheme(appTheme);
+  }, []);
 
   function update(patch: Partial<OnboardingState>) {
     onChange({ ...state, ...patch });
@@ -243,7 +212,7 @@ function OnboardingFlow({
 
   return (
     <main className="onboarding-shell">
-      <section className="onboarding-panel" aria-label="Vendor onboarding">
+      <section className="onboarding-panel" aria-label="Distributor onboarding">
         <aside className="onboarding-sidebar">
           <a href="/" className="onboarding-brand" aria-label="Zoftware onboarding">
             <img src={defaultTheme.assets.miniLogo} alt="" />
@@ -264,13 +233,6 @@ function OnboardingFlow({
             ))}
           </div>
 
-          <div className="onboarding-summary">
-            <small>Current build</small>
-            <strong>{state.brandName || state.vendorName || "New vendor hub"}</strong>
-            <p>
-              {state.services.length} services, {state.categorySlugs.length} parent categories
-            </p>
-          </div>
         </aside>
 
         <section className="onboarding-main">
@@ -283,8 +245,7 @@ function OnboardingFlow({
             {stepIndex === 0 && <WorkspaceStep state={state} update={update} />}
             {stepIndex === 1 && <CategoriesStep state={state} update={update} />}
             {stepIndex === 2 && <ServicesStep state={state} update={update} />}
-            {stepIndex === 3 && <BrandStep state={state} update={update} />}
-            {stepIndex === 4 && (
+            {stepIndex === 3 && (
               <ThemeStep
                 state={state}
                 update={update}
@@ -329,8 +290,8 @@ function OnboardingFlow({
               </button>
             </div>
             <iframe
-              src={`/home?previewTheme=${encodeURIComponent(state.themeId)}&previewLayout=${encodeURIComponent(state.layoutId)}`}
-              title={`${activeTheme.name} ${state.layoutId} full landing preview`}
+              src={`/home?previewTheme=${encodeURIComponent(state.themeId)}`}
+              title={`${activeTheme.name} full landing preview`}
             />
           </div>
         </div>
@@ -349,7 +310,7 @@ function WorkspaceStep({
   return (
     <div className="onboarding-grid onboarding-grid--two">
       <label className="onboarding-field">
-        <span>Vendor name</span>
+        <span>Distributor name</span>
         <input
           value={state.vendorName}
           placeholder="Acme Advisory"
@@ -497,53 +458,6 @@ function CategoriesStep({
   );
 }
 
-function BrandStep({
-  state,
-  update,
-}: {
-  state: OnboardingState;
-  update: (patch: Partial<OnboardingState>) => void;
-}) {
-  return (
-    <div className="onboarding-grid onboarding-grid--two">
-      <label className="onboarding-field">
-        <span>White-label name</span>
-        <input
-          value={state.brandName}
-          placeholder={state.vendorName || "Acme Software Hub"}
-          onChange={(event) => update({ brandName: event.target.value })}
-        />
-      </label>
-      <label className="onboarding-field">
-        <span>Preferred subdomain</span>
-        <input
-          value={state.subdomain}
-          placeholder="software.acme.com"
-          onChange={(event) => update({ subdomain: event.target.value })}
-        />
-      </label>
-      <label className="onboarding-field onboarding-field--wide">
-        <span>Launch window</span>
-        <select
-          value={state.launchWindow}
-          onChange={(event) => update({ launchWindow: event.target.value })}
-        >
-          <option>30 days</option>
-          <option>60 days</option>
-          <option>90 days</option>
-          <option>Still evaluating</option>
-        </select>
-      </label>
-      <div className="onboarding-note">
-        <CompareIcon />
-        <span>
-          This draft stays in the browser for now. Finishing setup applies the name and selected theme to the local landing page.
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function ThemeStep({
   state,
   update,
@@ -552,59 +466,62 @@ function ThemeStep({
 }: {
   state: OnboardingState;
   update: (patch: Partial<OnboardingState>) => void;
-  activeTheme: ThemeConfig;
+  activeTheme: ThemePackage;
   onOpenFullPreview: () => void;
 }) {
-  const recommendedThemeId = recommendedThemeByLayout[state.layoutId] ?? themes[0].id;
-  const recommendedTheme = resolveTheme(recommendedThemeId);
+  const placeholderCount = Math.max(0, MIN_THEME_SLOTS - themePackages.length);
 
   return (
     <div className="theme-layout-grid">
       <section>
-        <div className="theme-section-title">
-          <h2>Theme</h2>
-          <span>Suggested for {layoutOptions.find((layout) => layout.id === state.layoutId)?.title}: {recommendedTheme.name}</span>
-        </div>
-        <div className="theme-choice-list">
-          {themes.map((theme) => (
-            <button
-              type="button"
-              key={theme.id}
-              className={`theme-card ${state.themeId === theme.id ? "is-selected" : ""}`}
-              onClick={() => update({ themeId: theme.id })}
-            >
-              <span className="theme-card__top">
-                <img src={theme.assets.logo} alt="" />
-                <span>
-                  <b>{theme.name}</b>
-                  {theme.id === recommendedThemeId ? <em>Recommended</em> : null}
+        <p className="theme-step-intro">
+          One bundle: layout, colors, typography, and content direction. Pick a package to
+          style the public landing experience.
+        </p>
+        <div className="theme-pkg-grid" role="radiogroup" aria-label="Theme package">
+          {themePackages.map((theme) => {
+            const selected = state.themeId === theme.id;
+            return (
+              <button
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                key={theme.id}
+                className={`theme-pkg-card ${selected ? "is-selected" : ""}`}
+                onClick={() => update({ themeId: theme.id })}
+              >
+                <span className="theme-pkg-card__head">
+                  <img src={theme.assets.logo} alt="" />
+                  <span className="theme-pkg-card__check" aria-hidden="true">
+                    <CheckCircleIcon />
+                  </span>
                 </span>
-              </span>
-              <span className="theme-card__swatches">
-                <i style={{ background: theme.colors.background }} />
-                <i style={{ background: theme.colors.brand }} />
-                <i style={{ background: theme.colors.brandDark }} />
-                <i style={{ background: theme.colors.panelSoft }} />
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <h2>Layout direction</h2>
-        <div className="layout-choice-list">
-          {layoutOptions.map((layout) => (
-            <button
-              type="button"
-              key={layout.id}
-              className={`layout-choice ${state.layoutId === layout.id ? "is-selected" : ""}`}
-              onClick={() => update({ layoutId: layout.id })}
+                <strong className="theme-pkg-card__name">{theme.name}</strong>
+                <span className="theme-pkg-card__desc">{theme.description}</span>
+                <span className="theme-pkg-card__swatches" aria-hidden="true">
+                  {getThemeSwatches(theme).map((color, index) => (
+                    <i key={index} style={{ background: color }} />
+                  ))}
+                </span>
+                <span className="theme-pkg-card__tags">
+                  <span className="theme-pkg-card__cue">{theme.typography.headingLabel}</span>
+                  <span className="theme-pkg-card__char">{theme.character}</span>
+                </span>
+                <span className="theme-pkg-card__status">
+                  {selected ? "Selected package" : "Select package"}
+                </span>
+              </button>
+            );
+          })}
+          {Array.from({ length: placeholderCount }).map((_, index) => (
+            <div
+              key={`theme-placeholder-${index}`}
+              className="theme-pkg-card theme-pkg-card--empty"
+              aria-hidden="true"
             >
-              <strong>{layout.title}</strong>
-              <small>{layout.description}</small>
-              <em>{resolveTheme(recommendedThemeByLayout[layout.id]).name} suggested</em>
-            </button>
+              <span className="theme-pkg-card__empty-mark">+</span>
+              <span className="theme-pkg-card__empty-text">More theme packages coming soon</span>
+            </div>
           ))}
         </div>
       </section>
@@ -617,19 +534,43 @@ function ThemeStep({
           </button>
         </div>
         <div className="theme-hero-preview__hero">
-          <div>
-            <img src={activeTheme.assets.logo} alt="" />
-            <h2>{state.brandName || state.vendorName || "New vendor hub"}</h2>
-            <p>Choose the right software with a clear strategy. Ready to implement.</p>
-            <div className="theme-hero-preview__actions">
-              <span>Get strategy</span>
-              <span>Talk to an expert</span>
+          <div className="theme-hero-preview__canvas">
+            <div className="theme-hero-preview__masthead">
+              <img src={activeTheme.assets.logo} alt="" />
+              <span>{activeTheme.landing.hero.eyebrow}</span>
+            </div>
+            <div className="theme-hero-preview__copy">
+              <small>Display typography</small>
+              <h2>{state.brandName || state.vendorName || activeTheme.landing.brand.name}</h2>
+              <p>{activeTheme.landing.hero.description}</p>
+              <div className="theme-hero-preview__actions">
+                <span>{activeTheme.landing.navigation.primaryCtaLabel}</span>
+                <span>{activeTheme.landing.navigation.signInLabel}</span>
+              </div>
             </div>
           </div>
-          <aside>
-            <small>Top match</small>
-            <strong>92%</strong>
-            <p>Best-fit shortlist ready</p>
+          <aside className="theme-hero-preview__sidebar">
+            <div className="theme-hero-preview__sidebar-block">
+              <small>Theme name</small>
+              <strong>{activeTheme.name}</strong>
+            </div>
+            <div className="theme-hero-preview__sidebar-block">
+              <small>Display face</small>
+              <p className="theme-hero-preview__type-sample">{activeTheme.typography.headingLabel}</p>
+            </div>
+            <div className="theme-hero-preview__sidebar-block">
+              <small>Core palette</small>
+              <div className="theme-hero-preview__palette">
+                <i style={{ background: activeTheme.colors.background }} />
+                <i style={{ background: activeTheme.colors.brand }} />
+                <i style={{ background: activeTheme.colors.brandDark }} />
+                <i style={{ background: activeTheme.colors.panelSoft }} />
+              </div>
+            </div>
+            <div className="theme-hero-preview__sidebar-block">
+              <small>Body voice</small>
+              <p>Clear, high-contrast copy with a bundled landing structure and distinct visual tone.</p>
+            </div>
           </aside>
         </div>
       </section>
@@ -637,7 +578,7 @@ function ThemeStep({
   );
 }
 
-function themePreviewStyle(theme: ThemeConfig) {
+function themePreviewStyle(theme: ThemePackage) {
   return {
     "--preview-background": theme.colors.background,
     "--preview-text": theme.colors.text,
@@ -655,7 +596,7 @@ function themePreviewStyle(theme: ThemeConfig) {
 
 function getStepTitle(stepIndex: number) {
   if (stepIndex === 0) {
-    return "Create the vendor workspace.";
+    return "Create the distributor workspace.";
   }
 
   if (stepIndex === 1) {
@@ -666,9 +607,15 @@ function getStepTitle(stepIndex: number) {
     return "Select the services this white-label solution should include.";
   }
 
-  if (stepIndex === 3) {
-    return "Set the launch identity.";
-  }
+  return "Choose the theme package.";
+}
 
-  return "Choose the layout and theme.";
+function getThemeSwatches(theme: ThemePackage) {
+  return [
+    theme.colors.background,
+    theme.colors.panelSoft,
+    theme.colors.brand,
+    theme.colors.brandDark,
+    theme.colors.text,
+  ];
 }
