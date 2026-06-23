@@ -9,16 +9,18 @@ import {
 
 type Props = {
   product: CatalogProduct;
+  partnerSlug?: string;
 };
 
-const { product } = Astro.props;
+const { product, partnerSlug = "" } = Astro.props;
 const rating = getRating(product);
 const reviews = getReviewCount(product);
 const logo = getLocalProductLogo(product);
+const partnerPrefix = partnerSlug ? `/${partnerSlug}` : "";
 ---
 
 <article class="catalog-product-card">
-  <a href={`/products/${product.weburl}/overview`} class="catalog-product-card__main">
+  <a href={`${partnerPrefix}/products/${product.weburl}/overview`} class="catalog-product-card__main">
     <span class="catalog-logo-box">
       {logo ? (
         <img src={logo} alt={`${product.product_name} logo`} />
@@ -37,7 +39,7 @@ const logo = getLocalProductLogo(product);
       <b>{rating.toFixed(1)}</b>
       <small>{reviews ? `${reviews.toLocaleString()} reviews` : "Buyer score"}</small>
     </span>
-    <a href={`/compare/product?products=${product.weburl}`}>Compare</a>
-    <a class="is-primary" href={`/products/${product.weburl}/overview`}>View Details</a>
+    <a href={`${partnerPrefix}/compare/product?products=${product.weburl}`}>Compare</a>
+    <a class="is-primary" href={`${partnerPrefix}/products/${product.weburl}/overview`}>View Details</a>
   </div>
 </article>

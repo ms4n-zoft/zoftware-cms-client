@@ -32,6 +32,11 @@
   },
   "layout": {
     "maxWidth": "1280px",
+    "pageTop": "112px",
+    "contentGap": "24px",
+    "sidebarWidth": "296px",
+    "sectionGap": "28px",
+    "panelPadding": "20px",
     "radius": {
       "mode": "sharp",
       "pill": "0px",
@@ -51,11 +56,10 @@
     },
     "navigation": {
       "items": [
-        { "label": "Discover Software", "href": "#" },
-        { "label": "AI Tools", "href": "#" },
-        { "label": "Categories", "href": "#" },
-        { "label": "For Vendors", "href": "#" },
-        { "label": "Resources", "href": "#" }
+        { "label": "Get More Customers", "href": "/get-more-customers" },
+        { "label": "Convert More Leads", "href": "/convert-more-leads" },
+        { "label": "Retain Customers", "href": "/retain-customers" },
+        { "label": "AI & Automation", "href": "/ai-and-automation" }
       ],
       "signInLabel": "Sign In",
       "signInHref": "#",

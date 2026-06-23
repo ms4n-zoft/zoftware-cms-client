@@ -1,0 +1,21 @@
+---
+type Props = {
+  title: string;
+  eyebrow?: string;
+  description?: string;
+  class?: string;
+};
+
+const {
+  title,
+  eyebrow,
+  description,
+  class: className = "",
+} = Astro.props;
+---
+
+<header class:list={["theme-page-header", className]}>
+  {eyebrow ? <p class="theme-page-header__eyebrow">{eyebrow}</p> : null}
+  <h1>{title}</h1>
+  {description ? <p>{description}</p> : null}
+</header>

@@ -45,6 +45,11 @@ export const appTheme: ThemeConfig = {
   },
   layout: {
     maxWidth: "1212px",
+    pageTop: "112px",
+    contentGap: "24px",
+    sidebarWidth: "296px",
+    sectionGap: "28px",
+    panelPadding: "20px",
     radius: {
       mode: "rounded",
       pill: "80px",
@@ -97,9 +102,34 @@ export function themeVariables(theme: ThemeConfig) {
     "--font-body": theme.typography.body,
     "--font-heading": theme.typography.heading,
     "--layout-max-width": theme.layout.maxWidth,
+    "--theme-page-top": theme.layout.pageTop,
+    "--theme-layout-gap": theme.layout.contentGap,
+    "--theme-sidebar-width": theme.layout.sidebarWidth,
+    "--theme-section-gap": theme.layout.sectionGap,
+    "--theme-panel-padding": theme.layout.panelPadding,
     "--radius-pill": theme.layout.radius.pill,
     "--radius-panel": theme.layout.radius.panel,
     "--radius-card": theme.layout.radius.card,
+    "--theme-surface-page": theme.colors.background,
+    "--theme-surface-card": theme.colors.panel,
+    "--theme-surface-soft": theme.colors.panelSoft,
+    "--theme-surface-hero": theme.colors.heroStart,
+    "--theme-text-heading": theme.colors.text,
+    "--theme-text-body": theme.colors.text,
+    "--theme-text-muted": theme.colors.mutedText,
+    "--theme-text-soft": theme.colors.softText,
+    "--theme-text-inverse": theme.colors.background,
+    "--theme-border-default": theme.colors.border,
+    "--theme-border-strong": theme.colors.brandDark,
+    "--theme-action-primary": theme.colors.brand,
+    "--theme-action-secondary": theme.colors.panel,
+    "--theme-action-contrast": theme.colors.brandDark,
+    "--theme-shadow-soft": theme.id === "violet-atlas"
+      ? "0 20px 48px rgba(91, 53, 245, 0.12)"
+      : "0 18px 40px rgba(10, 10, 10, 0.08)",
+    "--theme-shadow-card": theme.id === "violet-atlas"
+      ? "0 8px 24px rgba(91, 53, 245, 0.08)"
+      : "0 8px 18px rgba(10, 10, 10, 0.06)",
   } as const;
 }
 

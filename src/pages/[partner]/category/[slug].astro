@@ -1,0 +1,119 @@
+---
+import CatalogProductCard from "../../../components/CatalogProductCard.astro";
+import CatalogShell from "../../../components/CatalogShell.astro";
+import ThemeBreadcrumbs from "../../../components/theme-system/ThemeBreadcrumbs.astro";
+import ThemePageFrame from "../../../components/theme-system/ThemePageFrame.astro";
+import ThemePageHeader from "../../../components/theme-system/ThemePageHeader.astro";
+import ThemePanel from "../../../components/theme-system/ThemePanel.astro";
+import ThemeSection from "../../../components/theme-system/ThemeSection.astro";
+import ThemeSplitLayout from "../../../components/theme-system/ThemeSplitLayout.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {
+  getDefaultPartnerSlug,
+  getParentCategory,
+  getProductsBySubcategory,
+  getSubcategory,
+  getTenantConfig,
+} from "../../../lib/clientApi";
+
+const partnerSlug = Astro.params.partner ?? getDefaultPartnerSlug();
+const subcategorySlug = Astro.params.slug ?? "";
+const tenantConfig = await getTenantConfig(partnerSlug);
+
+if (!tenantConfig) {
+  return Astro.redirect("/");
+}
+
+const subcategory = await getSubcategory(partnerSlug, subcategorySlug);
+
+if (!subcategory) {
+  return Astro.redirect(`/${partnerSlug}`);
+}
+
+const [parent, productResult] = await Promise.all([
+  subcategory.parent_cat_weburl
+    ? getParentCategory(partnerSlug, subcategory.parent_cat_weburl)
+    : null,
+  getProductsBySubcategory(partnerSlug, subcategorySlug, { limit: 12 }),
+]);
+
+const products = productResult?.products ?? [];
+const parentName = parent?.name ?? subcategory.parent?.name ?? "Software";
+const parentWeburl = parent?.weburl ?? subcategory.parent?.weburl ?? "";
+---
+
+<BaseLayout
+  title={`${subcategory.name} Products`}
+  description={subcategory.meta_description || subcategory.description || ""}
+  useActiveTheme={true}
+  themeId={tenantConfig.themeId}
+>
+  <CatalogShell partnerSlug={partnerSlug} tenantConfig={tenantConfig}>
+    <ThemePageFrame>
+      <ThemeSplitLayout>
+        <ThemeBreadcrumbs
+          items={[
+            { label: "Home", href: `/${partnerSlug}` },
+            ...(parentWeburl
+              ? [{ label: parentName, href: `/${partnerSlug}/category/p/${parentWeburl}` }]
+              : []),
+            { label: subcategory.name },
+          ]}
+        />
+
+        <ThemePageHeader
+          eyebrow={parentName}
+          title={subcategory.name}
+          description={subcategory.meta_description || subcategory.description}
+        />
+
+        <ThemePanel variant="hero" bodyClass="catalog-overview">
+          <h2>What is {subcategory.name}</h2>
+          <p>
+            <strong>{subcategory.name}</strong> helps businesses manage related workflows,
+            compare vendors, and choose tools with a clear view of pricing, support, and implementation fit.
+          </p>
+          <button type="button">See More</button>
+        </ThemePanel>
+
+        <ThemePanel class="compatibility-card" variant="soft" padded={false}>
+          <div>
+            <p>Check Compatibility for FREE, for accurate personalised results.</p>
+            <h2>What is your monthly budget?</h2>
+            <strong>$ 5000</strong>
+          </div>
+          <a href={`/${partnerSlug}/search/form`}>Next</a>
+        </ThemePanel>
+
+        <ThemeSection
+          title={`Products Available: ${productResult?.pagination.total ?? products.length}`}
+          description="Browse shortlisted products for this software use case."
+          actionHref={`/${partnerSlug}`}
+          actionLabel="Filter by industry"
+        >
+          <div class="catalog-filters">
+            <button type="button">Rating</button>
+            <button type="button">Segment</button>
+            <button type="button">Alphabetical Order</button>
+          </div>
+          <div class="catalog-product-list">
+            {products.map((product) => (
+              <CatalogProductCard product={product} partnerSlug={partnerSlug} />
+            ))}
+          </div>
+        </ThemeSection>
+
+        <a
+          slot="aside"
+          class="buyer-guide-card theme-panel"
+          href={`/${partnerSlug}/category/${subcategory.weburl}/buyers-guide`}
+        >
+          <small>Curious How to Purchase?</small>
+          <strong>Explore Our Buyer's guide!</strong>
+        </a>
+        <section slot="aside" class="ad-placeholder theme-panel" aria-label="Demo ad space" />
+        <section slot="aside" class="ad-placeholder is-tall theme-panel" aria-label="Demo ad space" />
+      </ThemeSplitLayout>
+    </ThemePageFrame>
+  </CatalogShell>
+</BaseLayout>

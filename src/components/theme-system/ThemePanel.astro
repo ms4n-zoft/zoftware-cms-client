@@ -1,0 +1,37 @@
+---
+type ThemePanelVariant = "default" | "soft" | "hero";
+
+type Props = {
+  tag?: string;
+  variant?: ThemePanelVariant;
+  class?: string;
+  bodyClass?: string;
+  padded?: boolean;
+};
+
+const {
+  tag = "section",
+  variant = "default",
+  class: className = "",
+  bodyClass = "",
+  padded = true,
+} = Astro.props;
+
+const Tag = tag;
+const variantClass =
+  variant === "soft"
+    ? "theme-panel--soft"
+    : variant === "hero"
+      ? "theme-panel--hero"
+      : undefined;
+---
+
+<Tag class:list={["theme-panel", variantClass, className]}>
+  {padded ? (
+    <div class:list={["theme-panel__body", bodyClass]}>
+      <slot />
+    </div>
+  ) : (
+    <slot />
+  )}
+</Tag>

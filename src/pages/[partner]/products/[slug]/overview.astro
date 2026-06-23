@@ -1,0 +1,183 @@
+---
+import CatalogProductCard from "../../../../components/CatalogProductCard.astro";
+import CatalogShell from "../../../../components/CatalogShell.astro";
+import ThemeBreadcrumbs from "../../../../components/theme-system/ThemeBreadcrumbs.astro";
+import ThemePageFrame from "../../../../components/theme-system/ThemePageFrame.astro";
+import ThemePanel from "../../../../components/theme-system/ThemePanel.astro";
+import ThemeSection from "../../../../components/theme-system/ThemeSection.astro";
+import ThemeSplitLayout from "../../../../components/theme-system/ThemeSplitLayout.astro";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import {
+  getLocalProductLogo,
+  getProductInitials,
+  getRating,
+  getReviewCount,
+} from "../../../../lib/catalog";
+import {
+  getDefaultPartnerSlug,
+  getProduct,
+  getProductsByParentCategory,
+  getTenantConfig,
+} from "../../../../lib/clientApi";
+
+const partnerSlug = Astro.params.partner ?? getDefaultPartnerSlug();
+const productSlug = Astro.params.slug ?? "";
+const tenantConfig = await getTenantConfig(partnerSlug);
+
+if (!tenantConfig) {
+  return Astro.redirect("/");
+}
+
+const product = await getProduct(partnerSlug, productSlug);
+
+if (!product) {
+  return Astro.redirect(`/${partnerSlug}`);
+}
+
+const parent = product.parent_categories?.[0] ?? null;
+const category = product.category?.[0] ?? null;
+const alternativesResult = parent
+  ? await getProductsByParentCategory(partnerSlug, parent.weburl, { limit: 5 })
+  : null;
+const alternatives = (alternativesResult?.products ?? []).filter(
+  (item) => item.weburl !== product.weburl,
+);
+const rating = getRating(product);
+const reviews = getReviewCount(product);
+const logo = getLocalProductLogo(product);
+const tabs = [
+  "Overview",
+  "Product Details",
+  "Zoftware Analysis",
+  "Features",
+  "Reviews",
+  "Pricing",
+  "Alternatives",
+  "Technology Stack",
+];
+const ratingRows = [
+  ["Ease of Use", product.ratings?.ease_of_use],
+  ["Features", product.ratings?.breadth_of_features],
+  ["Implementation", product.ratings?.ease_of_implementation],
+  ["Value", product.ratings?.value_for_money],
+  ["Support", product.ratings?.customer_support],
+];
+---
+
+<BaseLayout
+  title={`${product.product_name} Overview`}
+  description={product.overview || product.description || ""}
+  useActiveTheme={true}
+  themeId={tenantConfig.themeId}
+>
+  <CatalogShell partnerSlug={partnerSlug} tenantConfig={tenantConfig}>
+    <ThemePageFrame>
+      <ThemeBreadcrumbs
+        items={[
+          { label: "Home", href: `/${partnerSlug}` },
+          ...(parent ? [{ label: parent.name, href: `/${partnerSlug}/category/p/${parent.weburl}` }] : []),
+          ...(category ? [{ label: category.name, href: `/${partnerSlug}/category/${category.weburl}` }] : []),
+          { label: product.product_name },
+        ]}
+      />
+
+      <ThemePanel class="product-hero-card" variant="hero" padded={false}>
+        <div class="product-hero-card__brand">
+          <span class="catalog-logo-box is-large">
+            {logo ? (
+              <img src={logo} alt={`${product.product_name} logo`} />
+            ) : (
+              <b>{getProductInitials(product.product_name)}</b>
+            )}
+          </span>
+          <div>
+            <h1>{product.product_name}</h1>
+            <p class="product-rating">
+              <span>{"★".repeat(Math.round(rating))}{"☆".repeat(5 - Math.round(rating))}</span>
+              <b>{rating.toFixed(1)}</b>
+              <small>({reviews.toLocaleString()} reviews)</small>
+            </p>
+            <p>
+              <strong>Analyzed By Zoftware</strong>
+              <span>•</span>
+              Last Updated: 24th Feb 2026
+            </p>
+          </div>
+        </div>
+        <a href={`/${partnerSlug}/voice-bot`}>Talk to an Expert</a>
+      </ThemePanel>
+
+      <nav class="product-tabs theme-panel" aria-label="Product sections">
+        {tabs.map((tab, index) => (
+          <a class={index === 0 ? "is-active" : ""} href="#product-overview-content">{tab}</a>
+        ))}
+      </nav>
+
+      <ThemeSplitLayout class="product-content-grid" mainClass="product-content" asideClass="product-side">
+        <section id="product-overview-content">
+          <ThemePanel tag="article" class="product-panel">
+            <h2>{product.product_name} Overview</h2>
+            <p>{product.overview || product.description}</p>
+            <p>{product.usp}</p>
+          </ThemePanel>
+
+          <ThemePanel tag="article" class="product-panel">
+            <h2>Best For</h2>
+            <div class="product-tag-list">
+              <span>{product.best_for || "Growing teams"}</span>
+              {(product.keywords ?? []).map((keyword) => <span>{keyword}</span>)}
+              {(product.languages ?? []).map((language) => <span>{language}</span>)}
+            </div>
+          </ThemePanel>
+
+          <ThemePanel tag="article" class="product-panel product-panel--ratings">
+            <h2>Ratings Snapshot</h2>
+            <div class="rating-grid">
+              {ratingRows.map(([label, value]) => (
+                <div>
+                  <span>{label}</span>
+                  <b>{Number(value ?? rating).toFixed(1)}</b>
+                  <i><em style={`width: ${Math.min(Number(value ?? rating), 5) * 20}%`} /></i>
+                </div>
+              ))}
+            </div>
+          </ThemePanel>
+        </section>
+
+        <ThemePanel slot="aside">
+          <h2>Alternatives</h2>
+          <div class="product-side__links">
+            <a class="is-active" href="#alternatives">Alternatives for Ease of Use</a>
+            <a href="#alternatives">Alternatives for Value for Money</a>
+            <a href="#alternatives">Alternatives for Variety of Features</a>
+            <a href="#alternatives">Alternatives for Customer Support</a>
+          </div>
+        </ThemePanel>
+        <ThemePanel slot="aside">
+          <h2>Categories Associated</h2>
+          <a class="associated-category" href={category ? `/${partnerSlug}/category/${category.weburl}` : `/${partnerSlug}`}>
+            {category?.name ?? "Software"}
+            <span>›</span>
+          </a>
+        </ThemePanel>
+      </ThemeSplitLayout>
+
+      {alternatives.length > 0 ? (
+        <ThemeSection
+          id="alternatives"
+          class="product-alternatives"
+          title="Similar products"
+          description="Alternative products from the same category and buying context."
+          actionHref={category ? `/${partnerSlug}/category/${category.weburl}` : `/${partnerSlug}`}
+          actionLabel="View all"
+        >
+          <div class="catalog-product-list catalog-product-list--compact">
+            {alternatives.map((alternative) => (
+              <CatalogProductCard product={alternative} partnerSlug={partnerSlug} />
+            ))}
+          </div>
+        </ThemeSection>
+      ) : null}
+    </ThemePageFrame>
+  </CatalogShell>
+</BaseLayout>

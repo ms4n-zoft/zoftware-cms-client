@@ -1,0 +1,18 @@
+---
+import CatalogShell from "../components/CatalogShell.astro";
+import OutcomePageTemplate from "../components/theme-system/OutcomePageTemplate.astro";
+import { getOutcomePage } from "../data/outcome-pages";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const page = getOutcomePage("get-more-customers");
+---
+
+<BaseLayout
+  title="Get More Customers"
+  description={page?.description ?? "Customer acquisition systems and services."}
+  useActiveTheme={true}
+>
+  <CatalogShell>
+    {page ? <OutcomePageTemplate page={page} /> : null}
+  </CatalogShell>
+</BaseLayout>

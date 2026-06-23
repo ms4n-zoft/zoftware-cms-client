@@ -1,0 +1,18 @@
+---
+import CatalogShell from "../components/CatalogShell.astro";
+import OutcomePageTemplate from "../components/theme-system/OutcomePageTemplate.astro";
+import { getOutcomePage } from "../data/outcome-pages";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const page = getOutcomePage("ai-and-automation");
+---
+
+<BaseLayout
+  title="AI & Automation"
+  description={page?.description ?? "AI and automation systems and services."}
+  useActiveTheme={true}
+>
+  <CatalogShell>
+    {page ? <OutcomePageTemplate page={page} /> : null}
+  </CatalogShell>
+</BaseLayout>

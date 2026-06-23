@@ -1,0 +1,25 @@
+---
+type Props = {
+  class?: string;
+  mainClass?: string;
+  asideClass?: string;
+};
+
+const {
+  class: className = "",
+  mainClass = "",
+  asideClass = "",
+} = Astro.props;
+---
+
+<div class:list={["theme-page-shell__grid", className]}>
+  <div class:list={["theme-page-shell__main", mainClass]}>
+    <slot />
+  </div>
+
+  {Astro.slots.has("aside") ? (
+    <aside class:list={["theme-page-shell__aside", asideClass]}>
+      <slot name="aside" />
+    </aside>
+  ) : null}
+</div>

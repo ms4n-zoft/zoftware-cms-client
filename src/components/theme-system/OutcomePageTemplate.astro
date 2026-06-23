@@ -1,0 +1,221 @@
+---
+import type { OutcomePage } from "../../data/outcome-pages";
+import { outcomeIcons } from "./outcomeIcons";
+import ThemeBreadcrumbs from "./ThemeBreadcrumbs.astro";
+import ThemePageFrame from "./ThemePageFrame.astro";
+import ThemePanel from "./ThemePanel.astro";
+import ThemeSection from "./ThemeSection.astro";
+import ThemeSplitLayout from "./ThemeSplitLayout.astro";
+
+type Props = {
+  page: OutcomePage;
+};
+
+const { page } = Astro.props;
+const checkIcon = outcomeIcons.check;
+---
+
+<ThemePageFrame class="outcome-page">
+  <ThemeSplitLayout class="outcome-page__layout">
+    <ThemeBreadcrumbs
+      items={[
+        { label: "Home", href: "/home" },
+        { label: page.navLabel },
+      ]}
+    />
+
+    <ThemePanel variant="hero" class="outcome-hero" bodyClass="outcome-hero__body">
+      <div class="outcome-hero__main">
+        <p class="outcome-hero__eyebrow">{page.eyebrow}</p>
+        <h1 class="outcome-hero__title">{page.title}</h1>
+        <p class="outcome-hero__intro">{page.intro}</p>
+        <div class="outcome-hero__actions">
+          <a href={page.primaryCtaHref} class="theme-button-link theme-button-link--primary">
+            {page.primaryCtaLabel}
+          </a>
+          <a href={page.secondaryCtaHref} class="theme-button-link theme-button-link--secondary">
+            {page.secondaryCtaLabel}
+          </a>
+        </div>
+        <ul class="outcome-hero__highlights">
+          {page.heroHighlights.map((highlight) => (
+            <li>
+              <span class="outcome-icon outcome-icon--check">
+                <svg viewBox="0 0 24 24" set:html={checkIcon} />
+              </span>
+              {highlight}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <aside class="outcome-hero__card">
+        <span class="outcome-hero__card-label">Included focus areas</span>
+        <strong class="outcome-hero__card-value">{page.services.length}</strong>
+        <p>Implementation-led service tracks built around this outcome.</p>
+        <div class="outcome-hero__card-divider"></div>
+        <ul class="outcome-hero__card-list">
+          {page.services.map((service) => <li>{service.title}</li>)}
+        </ul>
+      </aside>
+    </ThemePanel>
+
+    <div class="outcome-metrics" role="list" aria-label="Outcome highlights">
+      {page.metrics.map((metric) => (
+        <div class="outcome-metric" role="listitem">
+          <strong>{metric.value}</strong>
+          <span>{metric.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <ThemeSection
+      title="Core services"
+      description="The solution tracks that make up this engagement."
+    >
+      <div class="outcome-service-grid">
+        {page.services.map((service) => (
+          <ThemePanel class="outcome-service-card" bodyClass="outcome-service-card__body">
+            <span class="outcome-icon outcome-icon--service">
+              <svg viewBox="0 0 24 24" set:html={outcomeIcons[service.icon] ?? outcomeIcons.spark} />
+            </span>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+            <ul class="outcome-service-card__list">
+              {service.highlights.map((highlight) => (
+                <li>
+                  <svg class="outcome-bullet-icon" viewBox="0 0 24 24" set:html={checkIcon} />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </ThemePanel>
+        ))}
+      </div>
+    </ThemeSection>
+
+    <ThemeSection
+      title="How it works"
+      description="A clear, implementation-led path from first audit to a live system."
+    >
+      <ol class="outcome-process">
+        {page.process.map((step, index) => (
+          <li class="outcome-step">
+            <span class="outcome-step__num">{String(index + 1).padStart(2, "0")}</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ol>
+    </ThemeSection>
+
+    <ThemeSection
+      title="What we deliver"
+      description="The concrete pieces we build, and the results they drive."
+    >
+      <div class="outcome-list-grid">
+        <ThemePanel class="outcome-list-card">
+          <div class="outcome-list-card__head">
+            <span class="outcome-icon outcome-icon--list">
+              <svg viewBox="0 0 24 24" set:html={outcomeIcons.deliverable} />
+            </span>
+            <h3>Deliverables</h3>
+          </div>
+          <ul>
+            {page.deliverables.map((item) => (
+              <li>
+                <svg viewBox="0 0 24 24" set:html={checkIcon} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </ThemePanel>
+
+        <ThemePanel class="outcome-list-card">
+          <div class="outcome-list-card__head">
+            <span class="outcome-icon outcome-icon--list">
+              <svg viewBox="0 0 24 24" set:html={outcomeIcons.outcome} />
+            </span>
+            <h3>Expected outcomes</h3>
+          </div>
+          <ul>
+            {page.outcomes.map((item) => (
+              <li>
+                <svg viewBox="0 0 24 24" set:html={checkIcon} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </ThemePanel>
+      </div>
+    </ThemeSection>
+
+    <ThemeSection
+      title="Frequently asked"
+      description="Quick answers before you book a call."
+    >
+      <div class="outcome-faq">
+        {page.faqs.map((faq) => (
+          <details class="outcome-faq__item">
+            <summary>
+              {faq.question}
+              <span class="outcome-faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </ThemeSection>
+
+    <ThemePanel variant="hero" class="outcome-cta-band" bodyClass="outcome-cta-band__body">
+      <div class="outcome-cta-band__copy">
+        <h2>{page.title} starts with one conversation.</h2>
+        <p>
+          Tell us your current workflow, your target outcome, and your team's constraints. We will
+          map the system from there.
+        </p>
+      </div>
+      <div class="outcome-cta-band__actions">
+        <a href={page.primaryCtaHref} class="theme-button-link theme-button-link--primary">
+          {page.primaryCtaLabel}
+        </a>
+        <a href={page.secondaryCtaHref} class="theme-button-link theme-button-link--secondary">
+          {page.secondaryCtaLabel}
+        </a>
+      </div>
+    </ThemePanel>
+
+    <ThemePanel slot="aside" class="outcome-sidebar-card outcome-sidebar-card--summary">
+      <span class="outcome-sidebar__eyebrow">Quick summary</span>
+      <p class="outcome-sidebar__summary">{page.summary}</p>
+    </ThemePanel>
+
+    <ThemePanel slot="aside" class="outcome-sidebar-card">
+      <h2>How the engagement runs</h2>
+      <ol class="outcome-sidebar-steps">
+        {page.engagement.map((item) => <li>{item}</li>)}
+      </ol>
+    </ThemePanel>
+
+    <ThemePanel slot="aside" class="outcome-sidebar-card">
+      <h2>Why teams choose this</h2>
+      <ul class="outcome-sidebar-trust">
+        {page.trustPoints.map((item) => (
+          <li>
+            <svg viewBox="0 0 24 24" set:html={checkIcon} />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </ThemePanel>
+
+    <ThemePanel slot="aside" class="outcome-sidebar-card outcome-sidebar-card--cta">
+      <span class="outcome-sidebar__eyebrow">Free consultation</span>
+      <h2>Book a systems audit</h2>
+      <p>A focused 30-minute review of your current workflow and the fastest route to this outcome.</p>
+      <a href={page.primaryCtaHref} class="theme-button-link theme-button-link--primary">
+        {page.primaryCtaLabel}
+      </a>
+    </ThemePanel>
+  </ThemeSplitLayout>
+</ThemePageFrame>

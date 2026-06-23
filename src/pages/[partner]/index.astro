@@ -1,0 +1,58 @@
+---
+import CatalogShell from "../../components/CatalogShell.astro";
+import ThemeBreadcrumbs from "../../components/theme-system/ThemeBreadcrumbs.astro";
+import ThemePageFrame from "../../components/theme-system/ThemePageFrame.astro";
+import ThemePageHeader from "../../components/theme-system/ThemePageHeader.astro";
+import ThemeSection from "../../components/theme-system/ThemeSection.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  getDefaultPartnerSlug,
+  getParentCategories,
+  getTenantConfig,
+} from "../../lib/clientApi";
+
+const partnerSlug = Astro.params.partner ?? getDefaultPartnerSlug();
+const tenantConfig = await getTenantConfig(partnerSlug);
+
+if (!tenantConfig) {
+  return Astro.redirect("/");
+}
+
+const categories = (await getParentCategories(partnerSlug)) ?? [];
+---
+
+<BaseLayout
+  title={`${tenantConfig.name} Software Catalog`}
+  description={`Browse ${tenantConfig.name} software categories and products.`}
+  useActiveTheme={true}
+  themeId={tenantConfig.themeId}
+>
+  <CatalogShell partnerSlug={partnerSlug} tenantConfig={tenantConfig}>
+    <ThemePageFrame>
+      <ThemeBreadcrumbs items={[{ label: tenantConfig.name }]} />
+
+      <ThemePageHeader
+        eyebrow="Software catalog"
+        title={tenantConfig.name}
+        description="Browse tenant-scoped software categories and product recommendations."
+      />
+
+      <ThemeSection
+        title="Software Categories"
+        description="Choose a category to compare available products."
+      >
+        <div class="subcategory-grid">
+          {categories.map((category) => (
+            <a class="subcategory-tile" href={`/${partnerSlug}/category/p/${category.weburl}`}>
+              <span>
+                <strong>{category.name}</strong>
+                <small>{category.description || category.meta_description}</small>
+              </span>
+              <i>›</i>
+            </a>
+          ))}
+        </div>
+      </ThemeSection>
+    </ThemePageFrame>
+  </CatalogShell>
+</BaseLayout>

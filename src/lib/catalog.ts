@@ -1,31 +1,72 @@
-import catalog from "../data/catalog/zoftware.json";
+export type CatalogCategory = {
+  name: string;
+  title?: string;
+  weburl: string;
+  description?: string;
+  meta_description?: string;
+  trending?: boolean;
+  monthly_searches?: number;
+  interest_generated?: number;
+  subcategories?: CatalogSubcategory[];
+  products?: string[];
+};
 
-export type Catalog = typeof catalog;
-export type CatalogCategory = Catalog["categories"][number];
-export type CatalogSubcategory = Catalog["subcategories"][number];
-export type CatalogProduct = Catalog["products"][number];
+export type CatalogSubcategory = {
+  name: string;
+  title?: string;
+  weburl: string;
+  description?: string;
+  meta_description?: string;
+  parent_cat_weburl?: string;
+  parent?: {
+    name: string;
+    weburl: string;
+  };
+  product_count?: number;
+  products?: string[];
+};
 
-export function getCatalog() {
-  return catalog;
-}
-
-export function getParentCategory(slug: string) {
-  return catalog.categories.find((category) => category.weburl === slug);
-}
-
-export function getSubcategory(slug: string) {
-  return catalog.subcategories.find((category) => category.weburl === slug);
-}
-
-export function getProduct(slug: string) {
-  return catalog.products.find((product) => product.weburl === slug);
-}
-
-export function getProducts(slugs: string[]) {
-  return slugs
-    .map((slug) => getProduct(slug))
-    .filter((product): product is CatalogProduct => Boolean(product));
-}
+export type CatalogProduct = {
+  product_name: string;
+  company?: string;
+  logo_url?: string | null;
+  weburl: string;
+  overview?: string;
+  description?: string;
+  usp?: string;
+  website?: string;
+  hq_location?: string;
+  year_founded?: number;
+  social_links?: Record<string, string>;
+  snapshots?: Array<{ name: string; Location: string }>;
+  videos?: string[];
+  ratings?: {
+    overall_rating?: number;
+    ease_of_use?: number;
+    breadth_of_features?: number;
+    ease_of_implementation?: number;
+    value_for_money?: number;
+    customer_support?: number;
+    total_reviews?: number;
+  };
+  tags?: Array<{ color: string; tag: string }>;
+  badges?: Array<{ name: string; icon?: string }>;
+  parent_categories?: Array<{ name: string; weburl: string }>;
+  category?: Array<{ name: string; weburl: string }>;
+  features?: Array<{ name: string }>;
+  other_features?: string[];
+  integrations?: Array<{ name: string; website: string; logo: string }>;
+  languages?: string[];
+  feature_overview?: string;
+  pricing_overview?: string;
+  pricing?: Array<Record<string, unknown>>;
+  pricing_details_web_url?: string;
+  reviews_strengths?: string[];
+  reviews_weakness?: string[];
+  is_verify?: boolean;
+  keywords?: string[];
+  best_for?: string;
+};
 
 export function formatNumber(value?: number) {
   return new Intl.NumberFormat("en-US").format(value ?? 0);
@@ -42,7 +83,7 @@ export function getProductInitials(name: string) {
 
 export function getLocalProductLogo(product: CatalogProduct) {
   const logo = product.logo_url;
-  return typeof logo === "string" && logo.startsWith("/") ? logo : "";
+  return typeof logo === "string" && logo.trim().length > 0 ? logo : "";
 }
 
 export function getRating(product: CatalogProduct) {
@@ -51,8 +92,4 @@ export function getRating(product: CatalogProduct) {
 
 export function getReviewCount(product: CatalogProduct) {
   return product.ratings?.total_reviews ?? 0;
-}
-
-export function getAllProductSlugs() {
-  return catalog.products.map((product) => product.weburl);
 }

@@ -1,25 +1,27 @@
 ---
 import "../styles/global.css";
-import { appTheme, themes, themeStyle } from "../lib/themeEngine";
+import { appTheme, resolveTheme, themes, themeStyle } from "../lib/themeEngine";
 
 type Props = {
   title: string;
   description: string;
   useActiveTheme?: boolean;
+  themeId?: string | null;
 };
 
-const { title, description, useActiveTheme = false } = Astro.props;
-const defaultTheme = useActiveTheme ? themes[0] : appTheme;
+const { title, description, useActiveTheme = false, themeId = null } = Astro.props;
+const defaultTheme = useActiveTheme ? resolveTheme(themeId) : appTheme;
 const themeBootScript = `
 (() => {
   const themes = ${JSON.stringify(themes)};
   const appTheme = ${JSON.stringify(appTheme)};
+  const tenantThemeId = ${JSON.stringify(themeId)};
   const key = "zoftware.activeThemeId";
   const previewThemeId = new URLSearchParams(window.location.search).get("previewTheme");
   const useActiveTheme = ${JSON.stringify(useActiveTheme)};
 
   function applySelectedTheme() {
-    const selectedId = previewThemeId || window.localStorage.getItem(key) || themes[0].id;
+    const selectedId = previewThemeId || tenantThemeId || window.localStorage.getItem(key) || themes[0].id;
     const theme = useActiveTheme
       ? themes.find((item) => item.id === selectedId) || themes[0]
       : appTheme;
@@ -40,9 +42,34 @@ const themeBootScript = `
       "--font-body": theme.typography.body,
       "--font-heading": theme.typography.heading,
       "--layout-max-width": theme.layout.maxWidth,
+      "--theme-page-top": theme.layout.pageTop,
+      "--theme-layout-gap": theme.layout.contentGap,
+      "--theme-sidebar-width": theme.layout.sidebarWidth,
+      "--theme-section-gap": theme.layout.sectionGap,
+      "--theme-panel-padding": theme.layout.panelPadding,
       "--radius-pill": theme.layout.radius.pill,
       "--radius-panel": theme.layout.radius.panel,
-      "--radius-card": theme.layout.radius.card
+      "--radius-card": theme.layout.radius.card,
+      "--theme-surface-page": theme.colors.background,
+      "--theme-surface-card": theme.colors.panel,
+      "--theme-surface-soft": theme.colors.panelSoft,
+      "--theme-surface-hero": theme.colors.heroStart,
+      "--theme-text-heading": theme.colors.text,
+      "--theme-text-body": theme.colors.text,
+      "--theme-text-muted": theme.colors.mutedText,
+      "--theme-text-soft": theme.colors.softText,
+      "--theme-text-inverse": theme.colors.background,
+      "--theme-border-default": theme.colors.border,
+      "--theme-border-strong": theme.colors.brandDark,
+      "--theme-action-primary": theme.colors.brand,
+      "--theme-action-secondary": theme.colors.panel,
+      "--theme-action-contrast": theme.colors.brandDark,
+      "--theme-shadow-soft": theme.id === "violet-atlas"
+        ? "0 20px 48px rgba(91, 53, 245, 0.12)"
+        : "0 18px 40px rgba(10, 10, 10, 0.08)",
+      "--theme-shadow-card": theme.id === "violet-atlas"
+        ? "0 8px 24px rgba(91, 53, 245, 0.08)"
+        : "0 8px 18px rgba(10, 10, 10, 0.06)"
     };
 
     Object.entries(vars).forEach(([name, value]) => {

@@ -1,0 +1,44 @@
+---
+type Props = {
+  id?: string;
+  title?: string;
+  description?: string;
+  actionLabel?: string;
+  actionHref?: string;
+  class?: string;
+};
+
+const {
+  id,
+  title,
+  description,
+  actionLabel,
+  actionHref,
+  class: className = "",
+} = Astro.props;
+
+const hasHeader = title || description || (actionLabel && actionHref) || Astro.slots.has("header") || Astro.slots.has("actions");
+---
+
+<section id={id} class:list={["theme-section", className]}>
+  {hasHeader ? (
+    <div class="theme-section__header">
+      {Astro.slots.has("header") ? (
+        <slot name="header" />
+      ) : (
+        <div>
+          {title ? <h2>{title}</h2> : null}
+          {description ? <p>{description}</p> : null}
+        </div>
+      )}
+
+      {Astro.slots.has("actions") ? (
+        <slot name="actions" />
+      ) : actionLabel && actionHref ? (
+        <a href={actionHref}>{actionLabel}</a>
+      ) : null}
+    </div>
+  ) : null}
+
+  <slot />
+</section>

@@ -1,0 +1,14 @@
+---
+type Props = {
+  class?: string;
+  pageClass?: string;
+};
+
+const { class: className = "", pageClass = "" } = Astro.props;
+---
+
+<main class:list={["theme-page-shell", className]}>
+  <div class:list={["page", pageClass]}>
+    <slot />
+  </div>
+</main>

@@ -1,0 +1,18 @@
+---
+import CatalogShell from "../components/CatalogShell.astro";
+import OutcomePageTemplate from "../components/theme-system/OutcomePageTemplate.astro";
+import { getOutcomePage } from "../data/outcome-pages";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const page = getOutcomePage("convert-more-leads");
+---
+
+<BaseLayout
+  title="Convert More Leads"
+  description={page?.description ?? "Lead conversion systems and services."}
+  useActiveTheme={true}
+>
+  <CatalogShell>
+    {page ? <OutcomePageTemplate page={page} /> : null}
+  </CatalogShell>
+</BaseLayout>
