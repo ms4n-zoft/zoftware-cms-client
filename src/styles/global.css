@@ -3444,6 +3444,7 @@ html[data-theme="monochrome"] .advisor-desk h1 {
 }
 
 .editor-field input,
+.editor-field select,
 .editor-field textarea {
   width: 100%;
   border: 1px solid var(--color-border);
@@ -3454,7 +3455,8 @@ html[data-theme="monochrome"] .advisor-desk h1 {
   line-height: 1.5;
 }
 
-.editor-field input {
+.editor-field input,
+.editor-field select {
   height: 42px;
   padding: 0 12px;
 }
@@ -3463,6 +3465,47 @@ html[data-theme="monochrome"] .advisor-desk h1 {
   min-height: 92px;
   padding: 10px 12px;
   resize: vertical;
+}
+
+.admin-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.admin-feature-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 13px;
+}
+
+.admin-feature-grid input {
+  width: 16px;
+  height: 16px;
+}
+
+.admin-status {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-panel-soft);
+  color: var(--color-muted-text);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.admin-action-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .admin-reset {

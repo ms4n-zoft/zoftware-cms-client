@@ -7,7 +7,19 @@ import {
   setByPath,
   storeSiteDraft,
 } from "../lib/contentOverrides";
-import { applyTheme, appTheme, getStoredThemeId, resolveThemePackage, storeThemeId, themePackages } from "../lib/themeEngine";
+import {
+  applyTheme,
+  appTheme,
+  getStoredThemeId,
+  resolveThemePackage,
+  storeThemeId,
+  themePackages,
+  type ThemePackage,
+} from "../lib/themeEngine";
+
+const ADMIN_SETTINGS_STORAGE_KEY = "zoftware.adminSettings";
+const DEFAULT_API_BASE_URL =
+  import.meta.env.PUBLIC_ZOFTWARE_API_BASE_URL || "http://localhost:3002/api/v1";
 
 type EditorField = {
   label: string;
@@ -73,8 +85,70 @@ const editorFields: EditorField[] = [
   },
 ];
 
+type TenantAdminPayload = {
+  partnerId: string;
+  slug: string;
+  name: string;
+  status: "active" | "disabled";
+  allowedParentCategoryWeburls: string[];
+  allowedSubCategoryWeburls: string[];
+  domains: string[];
+  themeId: string;
+  contentOverrides: Record<string, unknown>;
+  features: {
+    rfp: boolean;
+    leads: boolean;
+    sales: boolean;
+    publicClient: boolean;
+  };
+  inventoryPartnerName: string;
+};
+
+type TenantAdminResponse = {
+  success: boolean;
+  data?: TenantAdminPayload;
+  message?: string;
+};
+
+function csvToList(value: string) {
+  return Array.from(
+    new Set(
+      value
+        .split(",")
+        .map((item) => item.trim().toLowerCase())
+        .filter(Boolean),
+    ),
+  );
+}
+
+function listToCsv(value: string[] | undefined) {
+  return (value ?? []).join(", ");
+}
+
+function normalizeApiBaseUrl(value: string) {
+  return value.trim().replace(/\/$/, "");
+}
+
 export default function AdminApp() {
-  const [activePanel, setActivePanel] = useState<"theme" | "editor">("theme");
+  const [activePanel, setActivePanel] = useState<"tenant" | "theme" | "editor">("tenant");
+  const [apiBaseUrl, setApiBaseUrl] = useState(DEFAULT_API_BASE_URL);
+  const [adminKey, setAdminKey] = useState("");
+  const [partnerId, setPartnerId] = useState("peko");
+  const [tenantSlug, setTenantSlug] = useState("peko");
+  const [tenantName, setTenantName] = useState("Peko");
+  const [tenantStatus, setTenantStatus] = useState<"active" | "disabled">("active");
+  const [parentScopes, setParentScopes] = useState("crm-and-sales, marketing");
+  const [subScopes, setSubScopes] = useState("");
+  const [domains, setDomains] = useState("localhost");
+  const [inventoryPartnerName, setInventoryPartnerName] = useState("Peko");
+  const [features, setFeatures] = useState({
+    rfp: true,
+    leads: true,
+    sales: true,
+    publicClient: true,
+  });
+  const [adminMessage, setAdminMessage] = useState("");
+  const [adminBusy, setAdminBusy] = useState(false);
   const [activeThemeId, setActiveThemeId] = useState(themePackages[0].id);
   const [draft, setDraft] = useState<Record<string, unknown>>({});
   const previewRef = useRef<HTMLIFrameElement | null>(null);
@@ -88,10 +162,131 @@ export default function AdminApp() {
 
   useEffect(() => {
     const storedTheme = resolveThemePackage(getStoredThemeId());
+    const savedSettings = readAdminSettings();
+
+    if (savedSettings) {
+      setApiBaseUrl(savedSettings.apiBaseUrl || DEFAULT_API_BASE_URL);
+      setAdminKey(savedSettings.adminKey || "");
+      setPartnerId(savedSettings.partnerId || "peko");
+      setTenantSlug(savedSettings.tenantSlug || "peko");
+    }
+
     setActiveThemeId(storedTheme.id);
     setDraft(readSiteDraft());
     applyTheme(appTheme);
   }, []);
+
+  function readAdminSettings() {
+    try {
+      return JSON.parse(
+        window.localStorage.getItem(ADMIN_SETTINGS_STORAGE_KEY) ?? "null",
+      ) as {
+        apiBaseUrl?: string;
+        adminKey?: string;
+        partnerId?: string;
+        tenantSlug?: string;
+      } | null;
+    } catch {
+      return null;
+    }
+  }
+
+  function persistAdminSettings(nextSlug = tenantSlug, nextPartnerId = partnerId) {
+    window.localStorage.setItem(
+      ADMIN_SETTINGS_STORAGE_KEY,
+      JSON.stringify({
+        apiBaseUrl: normalizeApiBaseUrl(apiBaseUrl),
+        adminKey,
+        tenantSlug: nextSlug,
+        partnerId: nextPartnerId,
+      }),
+    );
+  }
+
+  function applyTenantResponse(tenant: TenantAdminPayload) {
+    setPartnerId(tenant.partnerId);
+    setTenantSlug(tenant.slug);
+    setTenantName(tenant.name);
+    setTenantStatus(tenant.status);
+    setParentScopes(listToCsv(tenant.allowedParentCategoryWeburls));
+    setSubScopes(listToCsv(tenant.allowedSubCategoryWeburls));
+    setDomains(listToCsv(tenant.domains));
+    setInventoryPartnerName(tenant.inventoryPartnerName || tenant.name);
+    setFeatures(tenant.features);
+    setActiveThemeId(tenant.themeId);
+    setDraft(tenant.contentOverrides || {});
+    storeThemeId(tenant.themeId);
+    storeSiteDraft(tenant.contentOverrides || {});
+    syncPreviewStorage(tenant.themeId, tenant.contentOverrides || {});
+    persistAdminSettings(tenant.slug, tenant.partnerId);
+  }
+
+  async function adminFetch(path: string, options: RequestInit = {}) {
+    const response = await fetch(`${normalizeApiBaseUrl(apiBaseUrl)}${path}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-API-Key": adminKey,
+        ...(options.headers || {}),
+      },
+    });
+    const payload = (await response.json()) as TenantAdminResponse;
+
+    if (!response.ok || !payload.success) {
+      throw new Error(payload.message || `Admin request failed (${response.status})`);
+    }
+
+    return payload;
+  }
+
+  async function loadTenant() {
+    setAdminBusy(true);
+    setAdminMessage("");
+
+    try {
+      persistAdminSettings();
+      const payload = await adminFetch(`/admin/tenants/${tenantSlug}`);
+      if (!payload.data) throw new Error("Tenant response was empty");
+      applyTenantResponse(payload.data);
+      setAdminMessage(`Loaded ${payload.data.name}`);
+    } catch (error) {
+      setAdminMessage((error as Error).message);
+    } finally {
+      setAdminBusy(false);
+    }
+  }
+
+  async function saveTenant() {
+    setAdminBusy(true);
+    setAdminMessage("");
+
+    try {
+      const payload = await adminFetch(`/admin/tenants/${tenantSlug}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          partnerId,
+          slug: tenantSlug,
+          name: tenantName,
+          status: tenantStatus,
+          allowedParentCategoryWeburls: csvToList(parentScopes),
+          allowedSubCategoryWeburls: csvToList(subScopes),
+          domains: csvToList(domains),
+          themeId: activeThemeId,
+          contentOverrides: draft,
+          features,
+          inventoryPartnerName,
+        }),
+      });
+
+      if (!payload.data) throw new Error("Tenant response was empty");
+      applyTenantResponse(payload.data);
+      setAdminMessage(`Saved ${payload.data.name}`);
+    } catch (error) {
+      setAdminMessage((error as Error).message);
+    } finally {
+      setAdminBusy(false);
+    }
+  }
 
   function updateTheme(theme: ThemePackage) {
     setActiveThemeId(theme.id);
@@ -126,6 +321,11 @@ export default function AdminApp() {
     preview.dispatchEvent(new StorageEvent("storage", { key: "zoftware.siteDraft" }));
   }
 
+  const previewHref = tenantSlug ? `/${tenantSlug}` : "/home";
+  const previewSrc = tenantSlug
+    ? `/${tenantSlug}?previewTheme=${activeThemeId}`
+    : "/home";
+
   return (
     <div className="admin-shell">
       <aside className="admin-sidebar" aria-label="Admin sections">
@@ -136,10 +336,18 @@ export default function AdminApp() {
         <nav>
           <button
             type="button"
+            className={activePanel === "tenant" ? "is-active" : ""}
+            onClick={() => setActivePanel("tenant")}
+          >
+            <small>01</small>
+            Tenant
+          </button>
+          <button
+            type="button"
             className={activePanel === "theme" ? "is-active" : ""}
             onClick={() => setActivePanel("theme")}
           >
-            <small>01</small>
+            <small>02</small>
             Package
           </button>
           <button
@@ -147,7 +355,7 @@ export default function AdminApp() {
             className={activePanel === "editor" ? "is-active" : ""}
             onClick={() => setActivePanel("editor")}
           >
-            <small>02</small>
+            <small>03</small>
             Content
           </button>
         </nav>
@@ -156,16 +364,187 @@ export default function AdminApp() {
       <main className="admin-main">
         <section className="admin-panel">
           <div className="admin-panel__header">
-            <p>{activePanel === "theme" ? "Step one" : "Step two"}</p>
-            <h1>{activePanel === "theme" ? "Choose the site package." : "Edit landing content."}</h1>
+            <p>
+              {activePanel === "tenant"
+                ? "Step one"
+                : activePanel === "theme"
+                  ? "Step two"
+                  : "Step three"}
+            </p>
+            <h1>
+              {activePanel === "tenant"
+                ? "Configure the partner tenant."
+                : activePanel === "theme"
+                  ? "Choose the site package."
+                  : "Edit landing content."}
+            </h1>
             <span>
-              {activePanel === "theme"
-                ? "A package controls layout, colors, typography, and the landing page structure together."
-                : "Update the package copy without changing the visual direction."}
+              {activePanel === "tenant"
+                ? "Load or provision the backend tenant that powers the public client route."
+                : activePanel === "theme"
+                  ? "A package controls layout, colors, typography, and the landing page structure together."
+                  : "Update the package copy without changing the visual direction."}
             </span>
           </div>
 
-          {activePanel === "theme" ? (
+          {activePanel === "tenant" ? (
+            <div className="editor-fields">
+              <label className="editor-field">
+                <span>
+                  <b>Backend API URL</b>
+                  <small>Base API endpoint used by the admin save/load actions.</small>
+                </span>
+                <input
+                  value={apiBaseUrl}
+                  onChange={(event) => setApiBaseUrl(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Admin API key</b>
+                  <small>Sent as X-Admin-API-Key. Stored locally in this browser.</small>
+                </span>
+                <input
+                  type="password"
+                  value={adminKey}
+                  onChange={(event) => setAdminKey(event.target.value)}
+                  autoComplete="off"
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Partner ID</b>
+                  <small>Stable backend ownership key for sessions, leads, RFPs, and sales.</small>
+                </span>
+                <input
+                  value={partnerId}
+                  onChange={(event) => setPartnerId(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Public slug</b>
+                  <small>Customer-facing route root, for example /peko or /acme.</small>
+                </span>
+                <input
+                  value={tenantSlug}
+                  onChange={(event) => setTenantSlug(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Tenant name</b>
+                  <small>Display name used by client pages and admin lists.</small>
+                </span>
+                <input
+                  value={tenantName}
+                  onChange={(event) => setTenantName(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Status</b>
+                  <small>Disabled tenants cannot be served by the public client.</small>
+                </span>
+                <select
+                  value={tenantStatus}
+                  onChange={(event) =>
+                    setTenantStatus(event.target.value === "disabled" ? "disabled" : "active")
+                  }
+                >
+                  <option value="active">Active</option>
+                  <option value="disabled">Disabled</option>
+                </select>
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Allowed parent categories</b>
+                  <small>Comma-separated backend category weburls.</small>
+                </span>
+                <textarea
+                  value={parentScopes}
+                  rows={2}
+                  onChange={(event) => setParentScopes(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Allowed subcategories</b>
+                  <small>Optional comma-separated subcategory weburls. Empty means all under allowed parents.</small>
+                </span>
+                <textarea
+                  value={subScopes}
+                  rows={2}
+                  onChange={(event) => setSubScopes(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Custom domains</b>
+                  <small>Comma-separated hostnames that resolve to this tenant.</small>
+                </span>
+                <textarea
+                  value={domains}
+                  rows={2}
+                  onChange={(event) => setDomains(event.target.value)}
+                />
+              </label>
+
+              <label className="editor-field">
+                <span>
+                  <b>Inventory partner name</b>
+                  <small>Name sent to the inventory/sales service for this partner.</small>
+                </span>
+                <input
+                  value={inventoryPartnerName}
+                  onChange={(event) => setInventoryPartnerName(event.target.value)}
+                />
+              </label>
+
+              <div className="editor-field">
+                <span>
+                  <b>Features</b>
+                  <small>Enable the modules this partner is allowed to use.</small>
+                </span>
+                <div className="admin-feature-grid">
+                  {(["publicClient", "rfp", "leads", "sales"] as const).map((feature) => (
+                    <label key={feature}>
+                      <input
+                        type="checkbox"
+                        checked={features[feature]}
+                        onChange={(event) =>
+                          setFeatures((current) => ({
+                            ...current,
+                            [feature]: event.target.checked,
+                          }))
+                        }
+                      />
+                      <span>{feature}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {adminMessage ? <p className="admin-status">{adminMessage}</p> : null}
+
+              <div className="admin-action-row">
+                <button type="button" className="admin-reset" disabled={adminBusy} onClick={loadTenant}>
+                  {adminBusy ? "Loading..." : "Load tenant"}
+                </button>
+                <button type="button" className="theme-button-link theme-button-link--primary" disabled={adminBusy} onClick={saveTenant}>
+                  {adminBusy ? "Saving..." : "Save tenant"}
+                </button>
+              </div>
+            </div>
+          ) : activePanel === "theme" ? (
             <div className="theme-grid">
               {themePackages.map((theme) => (
                 <button
@@ -226,16 +605,16 @@ export default function AdminApp() {
           <div className="admin-preview__bar">
             <span>
               <b>{activeTheme.name}</b>
-              Live landing preview
+              {tenantSlug ? `/${tenantSlug}` : "Live landing preview"}
             </span>
-            <a href="/home" target="_blank" rel="noreferrer">
+            <a href={previewHref} target="_blank" rel="noreferrer">
               Open site
             </a>
           </div>
           <iframe
             ref={previewRef}
-            src="/home"
-            title="Landing page preview"
+            src={previewSrc}
+            title="Tenant client preview"
             onLoad={() => syncPreviewStorage(activeThemeId, draft)}
           />
         </aside>
