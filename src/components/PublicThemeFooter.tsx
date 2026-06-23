@@ -11,6 +11,10 @@ function withPartnerPath(href: string, partnerSlug?: string) {
     return href;
   }
 
+  if (href === `/${partnerSlug}` || href.startsWith(`/${partnerSlug}/`)) {
+    return href;
+  }
+
   if (href === "/home" || href === "/") {
     return `/${partnerSlug}`;
   }

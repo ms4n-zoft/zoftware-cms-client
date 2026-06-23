@@ -11,6 +11,10 @@ function withPartnerPath(href: string, partnerSlug?: string) {
     return href;
   }
 
+  if (href === `/${partnerSlug}` || href.startsWith(`/${partnerSlug}/`)) {
+    return href;
+  }
+
   if (href === "/home" || href === "/") {
     return `/${partnerSlug}`;
   }
@@ -22,6 +26,15 @@ export default function PublicThemeHeader({ partnerSlug }: Props) {
   const activeTheme = useActiveThemePackage();
   const content = useCmsContent(activeTheme.landing, "landing");
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigationItems = partnerSlug
+    ? [{ label: "Catalog", href: `/${partnerSlug}` }]
+    : content.navigation.items;
+  const signInHref = partnerSlug
+    ? `/${partnerSlug}`
+    : content.navigation.signInHref;
+  const primaryCtaHref = partnerSlug
+    ? `/${partnerSlug}`
+    : content.navigation.primaryCtaHref;
 
   const brandLogo = useMemo(() => {
     if ("logo" in content.brand && typeof content.brand.logo === "string" && content.brand.logo) {
@@ -56,7 +69,7 @@ export default function PublicThemeHeader({ partnerSlug }: Props) {
 
         <nav className={`public-theme-header__nav ${menuOpen ? "is-open" : ""}`} aria-label="Primary navigation">
           <div className="public-theme-header__links">
-            {content.navigation.items.map((item) => (
+            {navigationItems.map((item) => (
               <a key={item.label} href={withPartnerPath(item.href, partnerSlug)}>
                 {item.label}
               </a>
@@ -65,13 +78,13 @@ export default function PublicThemeHeader({ partnerSlug }: Props) {
 
           <div className="public-theme-header__actions">
             <a
-              href={withPartnerPath(content.navigation.signInHref, partnerSlug)}
+              href={withPartnerPath(signInHref, partnerSlug)}
               className="theme-button-link theme-button-link--ghost"
             >
               {content.navigation.signInLabel}
             </a>
             <a
-              href={withPartnerPath(content.navigation.primaryCtaHref, partnerSlug)}
+              href={withPartnerPath(primaryCtaHref, partnerSlug)}
               className="theme-button-link theme-button-link--primary"
             >
               {content.navigation.primaryCtaLabel}

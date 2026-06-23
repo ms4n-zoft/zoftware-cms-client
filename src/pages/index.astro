@@ -1,3 +1,5 @@
 ---
-return Astro.redirect("/onboarding");
+import { getDefaultPartnerSlug } from "../lib/clientApi";
+
+return Astro.redirect(`/${getDefaultPartnerSlug()}`);
 ---
