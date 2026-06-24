@@ -1,0 +1,79 @@
+- main [ref=e4]:
+  - region "Distributor onboarding" [ref=e5]:
+    - complementary [ref=e6]:
+      - link "Zoftware onboarding" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8]: White-label setup
+      - generic [ref=e9]:
+        - button "Workspace" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Workspace
+        - button "Categories" [ref=e195] [cursor=pointer]:
+          - img [ref=e196]
+          - text: Categories
+        - button "Services" [ref=e249] [cursor=pointer]:
+          - img [ref=e250]
+          - text: Services
+        - button "4 Theme Package" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: "4"
+          - text: Theme Package
+    - generic [ref=e18]:
+      - generic [ref=e253]:
+        - paragraph [ref=e254]: Step 4 of 4
+        - heading "Choose the theme package." [level=1] [ref=e255]
+      - generic [ref=e257]:
+        - generic [ref=e258]:
+          - paragraph [ref=e259]: "One bundle: layout, colors, typography, and content direction. Pick a package to style the public landing experience."
+          - radiogroup "Theme package" [ref=e260]:
+            - radio "Signal Forge AI-powered enterprise software discovery with a bold editorial landing layout. Syne Display Bold editorial Select package" [ref=e336] [cursor=pointer]:
+              - img [ref=e264]
+              - strong [ref=e267]: Signal Forge
+              - generic [ref=e268]: AI-powered enterprise software discovery with a bold editorial landing layout.
+              - generic [ref=e275]:
+                - generic [ref=e276]: Syne Display
+                - generic [ref=e277]: Bold editorial
+              - generic [ref=e278]: Select package
+            - radio "Violet Atlas A warm discovery marketplace package with serif headlines, rounded cards, and a vivid purple action system. DM Serif Display Warm discovery Selected package" [checked] [active] [ref=e337] [cursor=pointer]:
+              - img [ref=e282]
+              - strong [ref=e285]: Violet Atlas
+              - generic [ref=e286]: A warm discovery marketplace package with serif headlines, rounded cards, and a vivid purple action system.
+              - generic [ref=e293]:
+                - generic [ref=e294]: DM Serif Display
+                - generic [ref=e295]: Warm discovery
+              - generic [ref=e296]: Selected package
+            - generic [ref=e297]:
+              - generic [ref=e298]: +
+              - generic [ref=e299]: More theme packages coming soon
+            - generic [ref=e300]:
+              - generic [ref=e301]: +
+              - generic [ref=e302]: More theme packages coming soon
+        - generic [ref=e303]:
+          - generic [ref=e304]:
+            - generic [ref=e305]: Preview
+            - button "Show full preview" [ref=e306] [cursor=pointer]
+          - generic [ref=e307]:
+            - generic [ref=e308]:
+              - generic [ref=e310]: AI-Powered Software Discovery
+              - generic [ref=e311]:
+                - generic [ref=e312]: Display typography
+                - heading "ZoftwareHub" [level=2] [ref=e313]
+                - paragraph [ref=e314]: 10,000+ verified B2B software products. AI-powered matching. Zero sales pressure.
+                - generic [ref=e315]:
+                  - generic [ref=e316]: List Your Software
+                  - generic [ref=e317]: Sign In
+            - complementary [ref=e318]:
+              - generic [ref=e319]:
+                - generic [ref=e320]: Theme name
+                - strong [ref=e321]: Violet Atlas
+              - generic [ref=e322]:
+                - generic [ref=e323]: Display face
+                - paragraph [ref=e324]: DM Serif Display
+              - generic [ref=e326]: Core palette
+              - generic [ref=e332]:
+                - generic [ref=e333]: Body voice
+                - paragraph [ref=e334]: Clear, high-contrast copy with a bundled landing structure and distinct visual tone.
+      - generic [ref=e41]:
+        - button "Back" [ref=e42] [cursor=pointer]
+        - button "Finish setup" [ref=e335] [cursor=pointer]:
+          - text: Finish setup
+          - img [ref=e44]

@@ -1,0 +1,41 @@
+[    1338ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:20102
+[   67354ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  <LandingExperience>
+    <VioletAtlasLanding activeTheme={{id:"violet...", ...}} content={{brand:{...}, ...}} activeCategory="All" ...>
+      <div
++       className={"min-h-screen bg-[#FAFAF6] font-['DM_Sans'] text-[#1A1A2E]"}
+-       className="min-h-screen bg-white font-manrope text-[#0A0A0A]"
+      >
+        <div
++         className="border-b border-[#241C48] bg-[#1A1A2E] px-6 py-3 text-center"
+-         className="bg-[#0A0A0A] py-2.5"
+        >
+          <div
++           className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-center gap-2 text-sm"
+-           className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          >
++           <span className="font-medium text-[#F3F4F6]">
+-           <div className="flex flex-wrap items-center justify-center gap-3">
+            ...
+        ...
+
+    at throwOnHydrationMismatch (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:3920:13)
+    at beginWork (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:8694:196)
+    at runWithFiberInDEV (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:997:72)
+    at performUnitOfWork (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:12561:98)
+    at workLoopConcurrentByScheduler (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:12557:11)
+    at renderRootConcurrent (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:12539:71)
+    at performWorkOnRoot (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:11766:152)
+    at performWorkOnRootViaSchedulerTask (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:13505:9)
+    at MessagePort.performWorkUntilDeadline (http://127.0.0.1:4321/node_modules/.vite/deps/chunk-MONWTLAF.js?v=cc324ba5:36:50)

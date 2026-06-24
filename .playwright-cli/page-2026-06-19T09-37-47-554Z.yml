@@ -1,0 +1,55 @@
+- main [ref=e4]:
+  - region "Distributor onboarding" [ref=e5]:
+    - complementary [ref=e6]:
+      - link "Zoftware onboarding" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e8]: White-label setup
+      - generic [ref=e9]:
+        - button "Workspace" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Workspace
+        - button "Categories" [ref=e195] [cursor=pointer]:
+          - img [ref=e196]
+          - text: Categories
+        - button "3 Services" [ref=e14] [cursor=pointer]:
+          - generic [ref=e15]: "3"
+          - text: Services
+        - button "4 Theme Package" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: "4"
+          - text: Theme Package
+    - generic [ref=e18]:
+      - generic [ref=e199]:
+        - paragraph [ref=e200]: Step 3 of 4
+        - heading "Select the services this white-label solution should include." [level=1] [ref=e201]
+      - generic [ref=e203]:
+        - button "Discovery Smart Search Guided software discovery with ranked distributor matches." [ref=e204] [cursor=pointer]:
+          - img [ref=e206]
+          - generic [ref=e208]:
+            - emphasis [ref=e209]: Discovery
+            - strong [ref=e210]: Smart Search
+            - generic [ref=e211]: Guided software discovery with ranked distributor matches.
+          - img [ref=e213]
+        - button "Planning RFP Service Buyer requirement capture and RFP generation workflow." [ref=e216] [cursor=pointer]:
+          - img [ref=e218]
+          - generic [ref=e221]:
+            - emphasis [ref=e222]: Planning
+            - strong [ref=e223]: RFP Service
+            - generic [ref=e224]: Buyer requirement capture and RFP generation workflow.
+          - img [ref=e226]
+        - button "Assist AI Chatbot Conversational assistant for buyers and internal teams." [ref=e229] [cursor=pointer]:
+          - img [ref=e231]
+          - generic [ref=e233]:
+            - emphasis [ref=e234]: Assist
+            - strong [ref=e235]: AI Chatbot
+            - generic [ref=e236]: Conversational assistant for buyers and internal teams.
+        - button "Knowledge RAG Knowledge Base Answer engine grounded in uploaded distributor and category knowledge." [ref=e238] [cursor=pointer]:
+          - img [ref=e240]
+          - generic [ref=e244]:
+            - emphasis [ref=e245]: Knowledge
+            - strong [ref=e246]: RAG Knowledge Base
+            - generic [ref=e247]: Answer engine grounded in uploaded distributor and category knowledge.
+      - generic [ref=e41]:
+        - button "Back" [ref=e42] [cursor=pointer]
+        - button "Continue" [active] [ref=e43] [cursor=pointer]:
+          - text: Continue
+          - img [ref=e44]

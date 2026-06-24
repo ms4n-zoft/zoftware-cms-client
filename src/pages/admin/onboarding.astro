@@ -1,0 +1,25 @@
+---
+import AdminGateForm from "../../components/AdminGateForm.astro";
+import AdminOnboarding from "../../components/AdminOnboarding.tsx";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { requireAdminPanelAccess } from "../../lib/adminGate";
+
+const gate = await requireAdminPanelAccess(Astro);
+
+if (gate.redirect) {
+  return gate.redirect;
+}
+---
+
+<BaseLayout
+  title="Zoftware Admin - Create Partner"
+  description="Create a new partner."
+>
+  {
+    gate.isAuthorized ? (
+      <AdminOnboarding client:load />
+    ) : (
+      <AdminGateForm errorMessage={gate.errorMessage} formAction={gate.formAction} />
+    )
+  }
+</BaseLayout>

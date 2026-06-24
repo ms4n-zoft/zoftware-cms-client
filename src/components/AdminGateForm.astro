@@ -1,0 +1,49 @@
+---
+interface Props {
+  errorMessage: string;
+  formAction: string;
+}
+
+const { errorMessage, formAction } = Astro.props;
+---
+
+<main class="admin-gate">
+  <form class="admin-gate__panel" method="post" action={formAction}>
+    <div class="admin-gate__header">
+      <p>Protected Admin</p>
+      <h1>Enter the admin passkey.</h1>
+      <span>
+        Use the 16-character passkey to open the admin panel.
+      </span>
+    </div>
+
+    <label class="editor-field" for="admin-passkey">
+      <span>
+        <b>Admin passkey</b>
+        <small>16 characters.</small>
+      </span>
+      <input
+        id="admin-passkey"
+        name="passkey"
+        type="password"
+        minlength="16"
+        maxlength="16"
+        autocomplete="current-password"
+        spellcheck="false"
+        aria-describedby={errorMessage ? "admin-passkey-error" : undefined}
+      />
+    </label>
+
+    {
+      errorMessage ? (
+        <p id="admin-passkey-error" class="admin-status admin-status--error" aria-live="polite">
+          {errorMessage}
+        </p>
+      ) : null
+    }
+
+    <button class="theme-button-link theme-button-link--primary" type="submit">
+      Unlock admin
+    </button>
+  </form>
+</main>

@@ -1,7 +1,7 @@
 {
   "id": "zoftware-hub",
   "name": "Signal Forge",
-  "description": "AI-powered enterprise software discovery with a bold editorial landing layout.",
+  "description": "A bold software search page for business buyers.",
   "character": "Bold editorial",
   "colors": {
     "background": "#ffffff",
@@ -50,8 +50,8 @@
       "logoAlt": "ZoftwareHub logo"
     },
     "announcement": {
-      "text": "New: AI-Powered RFP Builder is live - Build your RFP in minutes",
-      "linkLabel": "Explore Now ->",
+      "text": "New: Build a software shortlist in minutes",
+      "linkLabel": "Explore now ->",
       "linkHref": "#"
     },
     "navigation": {
@@ -59,7 +59,7 @@
         { "label": "Get More Customers", "href": "/get-more-customers" },
         { "label": "Convert More Leads", "href": "/convert-more-leads" },
         { "label": "Retain Customers", "href": "/retain-customers" },
-        { "label": "AI & Automation", "href": "/ai-and-automation" }
+        { "label": "Software Guides", "href": "/ai-and-automation" }
       ],
       "signInLabel": "Sign In",
       "signInHref": "#",
@@ -67,63 +67,63 @@
       "primaryCtaHref": "#"
     },
     "hero": {
-      "eyebrow": "AI-Powered Software Discovery",
+      "eyebrow": "Software made simple",
       "headlineLines": [
         "Discover the right",
         "software for",
         "your business."
       ],
-      "description": "AI-powered software discovery for enterprise teams. Compare, evaluate and implement with confidence.",
-      "searchPlaceholder": "Search for CRM, ERP, HRMS, Marketing tools...",
+      "description": "Find and compare business software in one place.",
+      "searchPlaceholder": "Search for CRM, HR, marketing tools...",
       "searchButtonLabel": "Search",
       "stats": [
-        { "value": "10,000+", "label": "Enterprise Software Listed" },
+        { "value": "10,000+", "label": "Software options" },
         { "value": "500+", "label": "Categories Covered" },
-        { "value": "50,000+", "label": "Verified Reviews" }
+        { "value": "50,000+", "label": "Reviews" }
       ],
-      "recommendationsEyebrow": "AI Recommendations",
-      "recommendationsTitle": "Top Matches For You",
+      "recommendationsEyebrow": "Suggested picks",
+      "recommendationsTitle": "Good Matches For You",
       "recommendations": [
         { "name": "Salesforce CRM", "category": "CRM", "score": 98, "rating": 4.8 },
         { "name": "HubSpot", "category": "CRM/Marketing", "score": 94, "rating": 4.9 },
         { "name": "MS Dynamics", "category": "ERP/CRM", "score": 89, "rating": 4.7 }
       ],
-      "recommendationsFilterLabel": "Filtered by: Enterprise • CRM • 500+ employees",
-      "recommendationsCtaLabel": "Start Free Evaluation ->"
+      "recommendationsFilterLabel": "Based on your search",
+      "recommendationsCtaLabel": "Start comparing ->"
     },
     "trustedBy": {
       "label": "Trusted by",
       "items": ["Salesforce", "SAP", "ERP", "Finance", "Strategy", "Pharma", "Scaling", "Platform"]
     },
     "aiTools": {
-      "eyebrow": "AI-Powered Tools",
+      "eyebrow": "Helpful tools",
       "headingLines": [
-        "AI Tools Built For Enterprise",
-        "Procurement"
+        "Tools To Help You Choose",
+        "Better Software"
       ],
       "items": [
         {
           "number": "01",
-          "title": "Strategy Builder",
-          "description": "Map your software strategy with AI-driven recommendations tailored to your org size, industry, and growth goals.",
+          "title": "Shortlist Builder",
+          "description": "Create a focused list of software options for your business.",
           "icon": "strategy"
         },
         {
           "number": "02",
-          "title": "RFP Builder",
-          "description": "Generate professional RFPs in minutes with AI-powered templates, scoring criteria, and vendor comparison frameworks.",
+          "title": "Request Builder",
+          "description": "Write a clear request you can share with vendors.",
           "icon": "rfp"
         },
         {
           "number": "03",
           "title": "Smart Compare",
-          "description": "Side-by-side feature comparison with weighted scoring across any software category. Make data-driven decisions.",
+          "description": "Compare tools side by side and see what fits best.",
           "icon": "compare"
         },
         {
           "number": "04",
-          "title": "Expert Connect",
-          "description": "Book 1:1 sessions with certified implementation experts for guided decisions and risk mitigation strategies.",
+          "title": "Expert Help",
+          "description": "Talk to someone who can help you make a clear choice.",
           "icon": "expert"
         }
       ],
@@ -131,7 +131,7 @@
     },
     "catalog": {
       "eyebrow": "Software Catalog",
-      "heading": "Explore Top Enterprise Software",
+      "heading": "Explore Top Business Software",
       "categories": ["All", "CRM", "ERP", "HRMS", "Analytics", "Security", "Automation"],
       "items": [
         {
@@ -141,7 +141,7 @@
           "rating": 4.8,
           "tier": "Enterprise",
           "tierTone": "dark",
-          "description": "The world's #1 CRM platform for sales, service, and marketing. Scalable for enterprise teams."
+          "description": "A popular tool for sales, service, and customer management."
         },
         {
           "abbr": "SAP",
@@ -150,7 +150,7 @@
           "rating": 4.7,
           "tier": "Enterprise",
           "tierTone": "dark",
-          "description": "Intelligent ERP for real-time business operations. Built for large-scale enterprise digital transformation."
+          "description": "A business management tool for finance, operations, and planning."
         },
         {
           "abbr": "HS",
@@ -159,7 +159,7 @@
           "rating": 4.9,
           "tier": "Growth",
           "tierTone": "accent",
-          "description": "All-in-one CRM and marketing platform. Ideal for growing teams with powerful automation features."
+          "description": "A sales and marketing tool for growing teams."
         },
         {
           "abbr": "WD",
@@ -168,7 +168,7 @@
           "rating": 4.6,
           "tier": "Enterprise",
           "tierTone": "dark",
-          "description": "Cloud HCM for finance and HR. Manage people, payroll, and planning from a single source of truth."
+          "description": "Manage people, payroll, and planning in one place."
         },
         {
           "abbr": "MSD",
@@ -177,7 +177,7 @@
           "rating": 4.7,
           "tier": "Enterprise",
           "tierTone": "dark",
-          "description": "Unified ERP and CRM from Microsoft. Deeply integrates with Office 365 and Azure ecosystem."
+          "description": "Microsoft tools for sales, finance, and customer work."
         },
         {
           "abbr": "ZO",
@@ -186,7 +186,7 @@
           "rating": 4.5,
           "tier": "Starter",
           "tierTone": "neutral",
-          "description": "Affordable CRM with AI-powered Zia assistant. Perfect entry point for growing businesses."
+          "description": "A simple CRM for growing businesses."
         },
         {
           "abbr": "NS",
@@ -195,7 +195,7 @@
           "rating": 4.6,
           "tier": "Enterprise",
           "tierTone": "dark",
-          "description": "Cloud ERP for financials, inventory, and operations. Trusted by 37,000+ organizations worldwide."
+          "description": "Manage finance, inventory, and operations."
         },
         {
           "abbr": "MK",
@@ -204,7 +204,7 @@
           "rating": 4.5,
           "tier": "Growth",
           "tierTone": "accent",
-          "description": "Adobe's marketing automation powerhouse. Drive engagement with personalized campaigns at scale."
+          "description": "Plan and manage marketing campaigns."
         },
         {
           "abbr": "UI",
@@ -213,17 +213,17 @@
           "rating": 4.8,
           "tier": "Enterprise",
           "tierTone": "dark",
-          "description": "Leading RPA platform for enterprise automation. Build, deploy, and manage bots across your organization."
+          "description": "Automate repeat work across your business."
         }
       ],
       "primaryActionLabel": "View Details",
       "secondaryActionLabel": "Compare"
     },
     "impactStats": [
-      { "value": "10K+", "label": "Software Products Listed" },
+      { "value": "10K+", "label": "Software options" },
       { "value": "500+", "label": "Categories Covered" },
-      { "value": "50K+", "label": "Verified Reviews" },
-      { "value": "200+", "label": "Implementation Experts" }
+      { "value": "50K+", "label": "Reviews" },
+      { "value": "200+", "label": "Experts" }
     ],
     "process": {
       "eyebrow": "Process",
@@ -236,18 +236,18 @@
         },
         {
           "number": "2",
-          "title": "Get AI Recommendations",
-          "description": "Our AI engine analyzes 10,000+ products to surface your top-matched solutions instantly."
+          "title": "Get suggestions",
+          "description": "See software options that match what you need."
         },
         {
           "number": "3",
-          "title": "Compare & Evaluate",
-          "description": "Use Smart Compare for side-by-side analysis. Build your RFP and score vendors objectively."
+          "title": "Compare options",
+          "description": "Review products side by side before you decide."
         },
         {
           "number": "4",
-          "title": "Implement with Experts",
-          "description": "Connect with certified specialists for guided implementation and post-go-live support."
+          "title": "Get help",
+          "description": "Talk to experts who can help with the next step."
         }
       ]
     },
@@ -257,57 +257,57 @@
       "groups": [
         {
           "label": "By Function",
-          "items": ["CRM", "ERP", "HRMS", "Marketing Automation", "Analytics", "Finance", "Procurement", "Supply Chain", "Customer Support"]
+          "items": ["CRM", "ERP", "HR", "Marketing", "Analytics", "Finance", "Buying", "Supply Chain", "Customer Support"]
         },
         {
           "label": "By Industry",
-          "items": ["Healthcare", "Retail", "Manufacturing", "Manufacturing ERP", "Education", "Real Estate", "Logistics", "Legal", "Professional Services"]
+          "items": ["Healthcare", "Retail", "Manufacturing", "Education", "Real Estate", "Logistics", "Legal", "Professional Services"]
         }
       ]
     },
     "whyChoose": {
       "eyebrow": "Why Us",
       "headingLines": [
-        "Why Enterprise Teams",
+        "Why Teams",
         "Choose ZoftwareHub"
       ],
       "items": [
         {
-          "title": "Unbiased AI Recommendations",
-          "description": "No pay-to-rank, pure AI-powered matching based on your real needs."
+          "title": "Clear suggestions",
+          "description": "Find options based on what you need."
         },
         {
           "title": "Verified Reviews Only",
-          "description": "All reviews vetted by enterprise procurement teams for authenticity."
+          "description": "Read reviews from real users."
         },
         {
-          "title": "End-to-End Support",
-          "description": "From discovery to implementation, we're with you every step of the way."
+          "title": "Support when needed",
+          "description": "Get help as you move from search to selection."
         },
         {
-          "title": "RFP in Minutes",
-          "description": "Our AI-powered RFP builder reduces weeks of work to minutes."
+          "title": "Clear requests",
+          "description": "Create a simple request to share with vendors."
         },
         {
           "title": "Expert Network",
-          "description": "200+ certified implementation consultants across all major platforms."
+          "description": "Get connected with experienced software experts."
         }
       ],
       "beforeLabel": "Before",
       "beforeItems": [
         "Manual spreadsheet comparisons",
-        "6–12 weeks for RFP creation",
+        "Slow request writing",
         "Vendor-biased reviews",
-        "No implementation guidance",
+        "Little guidance",
         "Costly wrong software choices"
       ],
       "afterLabel": "After",
       "afterItems": [
-        "AI-powered instant matching",
-        "RFP ready in minutes",
-        "Verified, unbiased reviews",
-        "Expert implementation support",
-        "Confident, data-backed decision"
+        "Fast suggestions",
+        "Clear request ready",
+        "Useful reviews",
+        "Expert support",
+        "Confident decision"
       ]
     },
     "testimonials": {
@@ -315,19 +315,19 @@
       "heading": "What Our Users Say",
       "items": [
         {
-          "quote": "ZoftwareHub cut our software evaluation time by 60%. The AI matching is incredibly accurate and saved our team countless hours.",
+          "quote": "ZoftwareHub helped us compare options faster and choose with confidence.",
           "name": "Sarah Chen",
           "role": "CTO, TechCorp",
           "avatar": "https://api.builder.io/api/v1/image/assets/TEMP/e12031bd74884bdc7f20d50539f6770102d38dae?width=96"
         },
         {
-          "quote": "The RFP builder alone saved us 3 weeks of procurement work. Game changer for enterprise buyers navigating complex vendor landscapes.",
+          "quote": "The request builder helped us save time and talk to vendors more clearly.",
           "name": "Marcus Rodriguez",
-          "role": "VP Procurement, Global Retail Co.",
+          "role": "VP Operations, Global Retail Co.",
           "avatar": "https://api.builder.io/api/v1/image/assets/TEMP/622fdd64d4993272a933896cffa0955314374e64?width=96"
         },
         {
-          "quote": "Expert Connect helped us avoid a costly implementation mistake. The certified consultants were knowledgeable and available instantly.",
+          "quote": "Expert help gave us confidence before we made a costly choice.",
           "name": "Priya Patel",
           "role": "IT Director, Healthcare Systems Inc.",
           "avatar": "https://api.builder.io/api/v1/image/assets/TEMP/ef3d9af59c4727de406e9baad650b5b6c77e9dc9?width=96"
@@ -338,11 +338,11 @@
       {
         "eyebrow": "09 - For Vendors",
         "titleLines": ["For Software Vendors"],
-        "description": "List your product on ZoftwareHub and reach 50,000+ enterprise procurement teams actively evaluating software. Get discovered by the buyers who matter.",
+        "description": "List your product and reach companies looking for software.",
         "items": [
-          "Verified enterprise buyer audience",
-          "AI-powered product matching",
-          "Real-time RFP notifications"
+          "Reach active buyers",
+          "Show up in relevant searches",
+          "Get useful notifications"
         ],
         "ctaLabel": "List Your Product ->",
         "ctaHref": "#",
@@ -350,12 +350,12 @@
       },
       {
         "eyebrow": "09 - For Partners",
-        "titleLines": ["For Implementation Partners"],
-        "description": "Join our expert network of 200+ certified implementation consultants. Get matched with enterprise clients looking for your specific expertise and certifications.",
+        "titleLines": ["For Service Partners"],
+        "description": "Join our expert network and get introduced to companies that need help.",
         "items": [
           "Verified client introductions",
-          "Managed bookings & payments",
-          "Build your certified reputation"
+          "Managed bookings and payments",
+          "Build your reputation"
         ],
         "ctaLabel": "Join Our Network ->",
         "ctaHref": "#",
@@ -367,14 +367,14 @@
         "Ready to Find Your",
         "Perfect Software Match?"
       ],
-      "description": "Join 50,000+ enterprise teams who use ZoftwareHub to make faster, smarter software decisions.",
+      "description": "Join teams who use ZoftwareHub to make better software choices.",
       "primaryLabel": "Start Free Evaluation",
       "primaryHref": "#",
       "secondaryLabel": "Talk to an Expert",
       "secondaryHref": "#"
     },
     "footer": {
-      "description": "AI-powered software discovery for enterprise procurement teams. Discover, compare, decide.",
+      "description": "Find, compare, and choose business software.",
       "socialLinks": [
         { "id": "linkedin", "href": "#" },
         { "id": "youtube", "href": "#" }
@@ -382,7 +382,7 @@
       "columns": [
         {
           "title": "Product",
-          "links": ["Discover Software", "Strategy Builder", "RFP Builder", "Smart Compare", "Expert Connect", "Pricing"]
+          "links": ["Discover Software", "Shortlist Builder", "Request Builder", "Compare", "Expert Help", "Pricing"]
         },
         {
           "title": "Company",
@@ -391,7 +391,7 @@
       ],
       "newsletter": {
         "title": "Newsletter",
-        "description": "Get the latest enterprise software insights in your inbox.",
+        "description": "Get helpful software tips in your inbox.",
         "placeholder": "yourname@company.com",
         "buttonLabel": "Subscribe ->"
       },

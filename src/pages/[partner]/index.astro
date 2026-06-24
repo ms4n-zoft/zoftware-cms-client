@@ -1,13 +1,12 @@
 ---
-import CatalogShell from "../../components/CatalogShell.astro";
-import ThemeBreadcrumbs from "../../components/theme-system/ThemeBreadcrumbs.astro";
-import ThemePageFrame from "../../components/theme-system/ThemePageFrame.astro";
-import ThemePageHeader from "../../components/theme-system/ThemePageHeader.astro";
-import ThemeSection from "../../components/theme-system/ThemeSection.astro";
+import LandingExperience from "../../components/LandingExperience";
+import TenantConfigScript from "../../components/TenantConfigScript.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { CatalogProduct } from "../../lib/catalog";
 import {
   getDefaultPartnerSlug,
   getParentCategories,
+  getProductsByParentCategory,
   getTenantConfig,
 } from "../../lib/clientApi";
 
@@ -19,40 +18,43 @@ if (!tenantConfig) {
 }
 
 const categories = (await getParentCategories(partnerSlug)) ?? [];
+const productResults = await Promise.all(
+  categories.map((category) =>
+    getProductsByParentCategory(partnerSlug, category.weburl, {
+      limit: 6,
+      sortBy: "rating",
+    }).catch(() => null),
+  ),
+);
+const featuredProducts = uniqueProducts(
+  productResults.flatMap((result) => result?.products ?? []),
+).slice(0, 18);
+
+function uniqueProducts(products: CatalogProduct[]) {
+  const seen = new Set<string>();
+
+  return products.filter((product) => {
+    if (seen.has(product.weburl)) {
+      return false;
+    }
+
+    seen.add(product.weburl);
+    return true;
+  });
+}
 ---
 
 <BaseLayout
-  title={`${tenantConfig.name} Software Catalog`}
-  description={`Browse ${tenantConfig.name} software categories and products.`}
+  title={`${tenantConfig.name} Software Discovery`}
+  description={`Browse ${tenantConfig.name} software categories, products, and recommendations.`}
   useActiveTheme={true}
   themeId={tenantConfig.themeId}
 >
-  <CatalogShell partnerSlug={partnerSlug} tenantConfig={tenantConfig}>
-    <ThemePageFrame>
-      <ThemeBreadcrumbs items={[{ label: tenantConfig.name }]} />
-
-      <ThemePageHeader
-        eyebrow="Software catalog"
-        title={tenantConfig.name}
-        description="Browse tenant-scoped software categories and product recommendations."
-      />
-
-      <ThemeSection
-        title="Software Categories"
-        description="Choose a category to compare available products."
-      >
-        <div class="subcategory-grid">
-          {categories.map((category) => (
-            <a class="subcategory-tile" href={`/${partnerSlug}/category/p/${category.weburl}`}>
-              <span>
-                <strong>{category.name}</strong>
-                <small>{category.description || category.meta_description}</small>
-              </span>
-              <i>›</i>
-            </a>
-          ))}
-        </div>
-      </ThemeSection>
-    </ThemePageFrame>
-  </CatalogShell>
+  <TenantConfigScript partnerSlug={partnerSlug} tenantConfig={tenantConfig} />
+  <LandingExperience
+    client:load
+    partnerSlug={partnerSlug}
+    parentCategories={categories}
+    featuredProducts={featuredProducts}
+  />
 </BaseLayout>

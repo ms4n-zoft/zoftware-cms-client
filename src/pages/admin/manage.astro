@@ -1,0 +1,25 @@
+---
+import AdminApp from "../../components/AdminApp";
+import AdminGateForm from "../../components/AdminGateForm.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { requireAdminPanelAccess } from "../../lib/adminGate";
+
+const gate = await requireAdminPanelAccess(Astro);
+
+if (gate.redirect) {
+  return gate.redirect;
+}
+---
+
+<BaseLayout
+  title="Zoftware Admin - Manage"
+  description="Edit partner settings, site look, and page content."
+>
+  {
+    gate.isAuthorized ? (
+      <AdminApp client:load />
+    ) : (
+      <AdminGateForm errorMessage={gate.errorMessage} formAction={gate.formAction} />
+    )
+  }
+</BaseLayout>

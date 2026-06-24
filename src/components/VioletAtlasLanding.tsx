@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import AdminFloatingButton from "./AdminFloatingButton";
+import type { LandingCategoryLink, LandingSoftwareItem } from "../lib/landingCatalog";
 import type { ThemePackage } from "../lib/themeEngine";
 
-type SoftwareItem = ThemePackage["landing"]["catalog"]["items"][number];
+type SoftwareItem = LandingSoftwareItem;
 
 export default function VioletAtlasLanding({
   activeTheme,
@@ -12,6 +12,9 @@ export default function VioletAtlasLanding({
   setActiveCategory,
   setSearchQuery,
   filteredSoftware,
+  catalogCategories,
+  categoryLinks,
+  partnerSlug,
 }: {
   activeTheme: ThemePackage;
   content: ThemePackage["landing"];
@@ -19,7 +22,10 @@ export default function VioletAtlasLanding({
   searchQuery: string;
   setActiveCategory: (value: string) => void;
   setSearchQuery: (value: string) => void;
-  filteredSoftware: ThemePackage["landing"]["catalog"]["items"];
+  filteredSoftware: LandingSoftwareItem[];
+  catalogCategories: string[];
+  categoryLinks: LandingCategoryLink[];
+  partnerSlug: string;
 }) {
   const [activeBrowseGroup, setActiveBrowseGroup] = useState(content.browseCategories.groups[0]?.label ?? "By Function");
 
@@ -29,16 +35,25 @@ export default function VioletAtlasLanding({
   );
 
   const brandLogo = resolveBrandLogo(content.brand, activeTheme);
-  const popularTags = content.catalog.categories.filter((item) => item !== "All").slice(0, 6);
+  const popularTags = catalogCategories.filter((item) => item !== "All").slice(0, 6);
   const heroCards = content.hero.recommendations.slice(0, 3);
   const vendorCta = content.audiences[0];
+  const browseDisplayItems = categoryLinks.length > 0
+    ? categoryLinks
+    : (browseGroup?.items ?? []).map((item) => ({ name: item, weburl: "" }));
 
   return (
     <div className="min-h-screen bg-[#FAFAF6] font-['DM_Sans'] text-[#1A1A2E]">
       <div className="border-b border-[#241C48] bg-[#1A1A2E] px-6 py-3 text-center">
         <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-center gap-2 text-sm">
-          <span className="font-medium text-[#F3F4F6]">{content.announcement.text}</span>
-          <a href={content.announcement.linkHref} className="font-semibold text-[#C4B5FD] transition-colors hover:text-white">
+          <span className="font-medium text-[#F3F4F6]" data-cms-path="landing.announcement.text">
+            {content.announcement.text}
+          </span>
+          <a
+            href={content.announcement.linkHref}
+            className="font-semibold text-[#C4B5FD] transition-colors hover:text-white"
+            data-cms-path="landing.announcement.linkLabel"
+          >
             {content.announcement.linkLabel}
           </a>
         </div>
@@ -46,7 +61,7 @@ export default function VioletAtlasLanding({
 
       <header className="sticky top-0 z-40 border-b border-[#E8E4F0] bg-[rgba(250,250,246,0.94)] backdrop-blur">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-8 px-6 py-4 lg:px-10">
-          <a href="/" aria-label={content.brand.logoAlt}>
+          <a href={`/${partnerSlug}`} aria-label={content.brand.logoAlt}>
             {brandLogo}
           </a>
 
@@ -54,7 +69,7 @@ export default function VioletAtlasLanding({
             {content.navigation.items.map((item) => (
               <a
                 key={item.label}
-                href={item.href}
+                href={withPartnerPath(item.href, partnerSlug)}
                 className="text-sm font-medium text-[#1A1A2E] transition-colors hover:text-[#5B35F5]"
               >
                 {item.label}
@@ -64,14 +79,16 @@ export default function VioletAtlasLanding({
 
           <div className="flex items-center gap-3">
             <a
-              href={content.navigation.signInHref}
+              href={withPartnerPath(content.navigation.signInHref, partnerSlug)}
               className="hidden text-sm font-medium text-[#1A1A2E] transition-colors hover:text-[#5B35F5] sm:block"
+              data-cms-path="landing.navigation.signInLabel"
             >
               {content.navigation.signInLabel}
             </a>
             <a
-              href={content.navigation.primaryCtaHref}
+              href={withPartnerPath(content.navigation.primaryCtaHref, partnerSlug)}
               className="rounded-full bg-[#5B35F5] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#4A28E0]"
+              data-cms-path="landing.navigation.primaryCtaLabel"
             >
               {content.navigation.primaryCtaLabel}
             </a>
@@ -86,18 +103,26 @@ export default function VioletAtlasLanding({
               <span className="flex size-2.5 items-center justify-center rounded-full bg-[rgba(91,53,245,0.25)]">
                 <span className="size-1.5 rounded-full bg-[#5B35F5]" />
               </span>
-              <span className="text-xs font-semibold text-[#5B35F5]">{content.hero.eyebrow}</span>
+              <span className="text-xs font-semibold text-[#5B35F5]" data-cms-path="landing.hero.eyebrow">
+                {content.hero.eyebrow}
+              </span>
             </div>
 
             <h1 className="font-['DM_Serif_Display'] text-4xl leading-[1.08] text-[#1A1A2E] sm:text-5xl lg:text-6xl xl:text-[68px]">
               {content.hero.headlineLines.map((line, index) => (
-                <span key={line} className={index === content.hero.headlineLines.length - 1 ? "block not-italic" : "block italic"}>
+                <span
+                  key={`${line}-${index}`}
+                  className={index === content.hero.headlineLines.length - 1 ? "block not-italic" : "block italic"}
+                  data-cms-path={`landing.hero.headlineLines.${index}`}
+                >
                   {line}
                 </span>
               ))}
             </h1>
 
-            <p className="max-w-lg text-base leading-relaxed text-[#6B7280] lg:text-lg">{content.hero.description}</p>
+            <p className="max-w-lg text-base leading-relaxed text-[#6B7280] lg:text-lg" data-cms-path="landing.hero.description">
+              {content.hero.description}
+            </p>
 
             <div className="flex items-center gap-3 rounded-[24px] border border-[#E8E4F0] bg-white p-2 pl-4 shadow-[0_8px_40px_0_rgba(91,53,245,0.12)]">
               <SearchGlyph />
@@ -107,8 +132,12 @@ export default function VioletAtlasLanding({
                 onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder={content.hero.searchPlaceholder}
                 className="min-w-0 flex-1 bg-transparent text-sm text-[#1A1A2E] outline-none placeholder:text-[#9CA3AF]"
+                data-cms-path="landing.hero.searchPlaceholder"
               />
-              <button className="rounded-xl bg-[#5B35F5] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#4A28E0]">
+              <button
+                className="rounded-xl bg-[#5B35F5] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#4A28E0]"
+                data-cms-path="landing.hero.searchButtonLabel"
+              >
                 {content.hero.searchButtonLabel}
               </button>
             </div>
@@ -128,10 +157,14 @@ export default function VioletAtlasLanding({
             </div>
 
             <div className="flex flex-wrap gap-6 pt-2">
-              {content.hero.stats.map((stat) => (
+              {content.hero.stats.map((stat, index) => (
                 <div key={stat.label}>
-                  <div className="font-['DM_Serif_Display'] text-xl text-[#1A1A2E]">{stat.value}</div>
-                  <div className="text-xs text-[#9CA3AF]">{stat.label}</div>
+                  <div className="font-['DM_Serif_Display'] text-xl text-[#1A1A2E]" data-cms-path={`landing.hero.stats.${index}.value`}>
+                    {stat.value}
+                  </div>
+                  <div className="text-xs text-[#9CA3AF]" data-cms-path={`landing.hero.stats.${index}.label`}>
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -149,7 +182,7 @@ export default function VioletAtlasLanding({
                 </div>
                 <div className="flex flex-col items-end gap-1">
                   <span className="rounded-full bg-[#5B35F5] px-2.5 py-1 text-[10px] font-bold text-white">
-                    {heroCards[0]?.score}% AI Match
+                    {heroCards[0]?.score}% Match
                   </span>
                   <span className="rounded-full bg-[#FEF3C7] px-2 py-0.5 text-[10px] font-semibold text-[#92400E]">
                     Most Popular
@@ -177,7 +210,7 @@ export default function VioletAtlasLanding({
                     </div>
                   </div>
                   <span className="rounded-full bg-[#EDE8FF] px-2.5 py-1 text-[10px] font-bold text-[#5B35F5]">
-                    {item.score}% AI Match
+                    {item.score}% Match
                   </span>
                 </div>
                 <div className="mt-3">
@@ -213,7 +246,9 @@ export default function VioletAtlasLanding({
               <SparkGlyph />
               <span className="text-xs font-semibold text-[#5B35F5]">{content.aiTools.eyebrow}</span>
             </div>
-            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl">{content.aiTools.headingLines[0]}</h2>
+            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl" data-cms-path="landing.aiTools.headingLines.0">
+              {content.aiTools.headingLines[0]}
+            </h2>
             <p className="max-w-md text-base text-[#6B7280]">
               Four intelligent tools working together to make your software decisions faster, smarter, and more confident.
             </p>
@@ -231,9 +266,19 @@ export default function VioletAtlasLanding({
                 <div className="relative z-10 flex size-12 items-center justify-center rounded-xl bg-[#5B35F5] text-white">
                   <AtlasToolIcon icon={tool.icon} />
                 </div>
-                <h3 className="relative z-10 mt-6 text-xl font-bold text-[#1A1A2E]">{tool.title}</h3>
-                <p className="relative z-10 mt-3 text-[15px] leading-relaxed text-[#6B7280]">{tool.description}</p>
-                <a href="#" className="relative z-10 mt-4 inline-flex text-sm font-semibold text-[#5B35F5] hover:underline">
+                <h3
+                  className="relative z-10 mt-6 text-xl font-bold text-[#1A1A2E]"
+                  data-cms-path={tool.number === "01" ? "landing.aiTools.items.0.title" : undefined}
+                >
+                  {tool.title}
+                </h3>
+                <p
+                  className="relative z-10 mt-3 text-[15px] leading-relaxed text-[#6B7280]"
+                  data-cms-path={tool.number === "01" ? "landing.aiTools.items.0.description" : undefined}
+                >
+                  {tool.description}
+                </p>
+                <a href="#software-catalog" className="relative z-10 mt-4 inline-flex text-sm font-semibold text-[#5B35F5] hover:underline">
                   {content.aiTools.ctaLabel}
                 </a>
               </div>
@@ -242,12 +287,14 @@ export default function VioletAtlasLanding({
         </div>
       </section>
 
-      <section className="bg-[#FAFAF6] px-6 py-20">
+      <section id="software-catalog" className="bg-[#FAFAF6] px-6 py-20">
         <div className="mx-auto max-w-[1280px] lg:px-10">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl">{content.catalog.heading}</h2>
+            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl" data-cms-path="landing.catalog.heading">
+              {content.catalog.heading}
+            </h2>
             <div className="flex items-center gap-1 rounded-full border border-[#E8E4F0] bg-white p-1">
-              {content.catalog.categories.map((category) => (
+              {catalogCategories.map((category) => (
                 <button
                   key={category}
                   type="button"
@@ -292,21 +339,29 @@ export default function VioletAtlasLanding({
                 </div>
 
                 <div className="mt-1 flex items-center gap-2">
-                  <button className="flex-1 rounded-full border border-[#5B35F5] py-2.5 text-xs font-semibold text-[#5B35F5] transition-colors hover:bg-[#5B35F5] hover:text-white">
+                  <a
+                    href={getProductHref(item, partnerSlug)}
+                    className="flex-1 rounded-full border border-[#5B35F5] py-2.5 text-center text-xs font-semibold text-[#5B35F5] transition-colors hover:bg-[#5B35F5] hover:text-white"
+                    data-cms-path="landing.catalog.primaryActionLabel"
+                  >
                     {content.catalog.primaryActionLabel}
-                  </button>
-                  <button className="flex-1 rounded-full bg-[#F5F0E8] py-2.5 text-xs font-semibold text-[#6B7280] transition-colors hover:bg-[#ECE5D9]">
+                  </a>
+                  <a
+                    href={getCompareHref(item, partnerSlug)}
+                    className="flex-1 rounded-full bg-[#F5F0E8] py-2.5 text-center text-xs font-semibold text-[#6B7280] transition-colors hover:bg-[#ECE5D9]"
+                    data-cms-path="landing.catalog.secondaryActionLabel"
+                  >
                     {content.catalog.secondaryActionLabel}
-                  </button>
+                  </a>
                 </div>
               </article>
             ))}
           </div>
 
           <div className="mt-10 flex justify-center">
-            <button className="rounded-full border border-[#5B35F5] px-8 py-3 text-sm font-semibold text-[#5B35F5] transition-colors hover:bg-[#5B35F5] hover:text-white">
-              Browse All 10,000+ Software →
-            </button>
+            <a href={`/${partnerSlug}`} className="rounded-full border border-[#5B35F5] px-8 py-3 text-sm font-semibold text-[#5B35F5] transition-colors hover:bg-[#5B35F5] hover:text-white">
+              Browse software
+            </a>
           </div>
         </div>
       </section>
@@ -328,7 +383,9 @@ export default function VioletAtlasLanding({
       <section className="bg-[#FAFAF6] px-6 py-20">
         <div className="mx-auto max-w-[1280px] lg:px-10">
           <div className="mb-14 text-center">
-            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl">{content.process.heading}</h2>
+            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl" data-cms-path="landing.process.heading">
+              {content.process.heading}
+            </h2>
             <p className="mt-3 text-sm text-[#6B7280]">
               A clear path from uncertainty to implementation — in four simple steps.
             </p>
@@ -349,8 +406,12 @@ export default function VioletAtlasLanding({
                       {step.number}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-[#1A1A2E]">{step.title}</h3>
-                  <p className="max-w-[180px] text-sm text-[#6B7280]">{step.description}</p>
+                  <h3 className="text-lg font-bold text-[#1A1A2E]" data-cms-path={index === 0 ? "landing.process.steps.0.title" : undefined}>
+                    {step.title}
+                  </h3>
+                  <p className="max-w-[180px] text-sm text-[#6B7280]" data-cms-path={index === 0 ? "landing.process.steps.0.description" : undefined}>
+                    {step.description}
+                  </p>
                 </div>
               );
             })}
@@ -361,9 +422,12 @@ export default function VioletAtlasLanding({
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-[1280px] lg:px-10">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl">{content.browseCategories.heading}</h2>
-            <div className="flex items-center gap-1.5 rounded-full border border-[#E8E4F0] p-1.5">
-              {content.browseCategories.groups.map((group) => (
+            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl" data-cms-path="landing.browseCategories.heading">
+              {content.browseCategories.heading}
+            </h2>
+            {!categoryLinks.length ? (
+              <div className="flex items-center gap-1.5 rounded-full border border-[#E8E4F0] p-1.5">
+                {content.browseCategories.groups.map((group) => (
                 <button
                   key={group.label}
                   type="button"
@@ -375,22 +439,23 @@ export default function VioletAtlasLanding({
                 >
                   {group.label}
                 </button>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
-            {browseGroup?.items.map((item) => (
-              <button
-                key={item}
-                type="button"
+            {browseDisplayItems.map((item) => (
+              <a
+                key={item.weburl || item.name}
+                href={item.weburl ? `/${partnerSlug}/category/p/${item.weburl}` : "#software-catalog"}
                 className="group flex min-h-[120px] flex-col items-center gap-2 rounded-[20px] border border-[#E8E4F0] bg-[#FAFAF6] p-5 text-center transition-all hover:border-[#5B35F5] hover:shadow-md"
               >
                 <span className="flex size-11 items-center justify-center rounded-xl bg-[#EDE8FF] text-[#5B35F5] transition-colors group-hover:bg-[#5B35F5] group-hover:text-white">
-                  <CategoryGlyph name={item} />
+                  <CategoryGlyph name={item.name} />
                 </span>
-                <span className="text-[13px] font-semibold text-[#1A1A2E]">{item}</span>
-              </button>
+                <span className="text-[13px] font-semibold text-[#1A1A2E]">{item.name}</span>
+              </a>
             ))}
           </div>
         </div>
@@ -401,12 +466,14 @@ export default function VioletAtlasLanding({
           <div className="flex flex-col gap-6">
             <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[#EDE8FF] px-4 py-1.5">
               <span className="size-2 rounded-full bg-[#5B35F5]" />
-              <span className="text-xs font-semibold text-[#5B35F5]">{content.whyChoose.eyebrow}</span>
+              <span className="text-xs font-semibold text-[#5B35F5]" data-cms-path="landing.whyChoose.eyebrow">
+                {content.whyChoose.eyebrow}
+              </span>
             </div>
 
             <h2 className="font-['DM_Serif_Display'] text-3xl leading-[1.15] text-[#1A1A2E] lg:text-4xl xl:text-[44px]">
-              {content.whyChoose.headingLines.map((line) => (
-                <span key={line} className="block">
+              {content.whyChoose.headingLines.map((line, index) => (
+                <span key={`${line}-${index}`} className="block" data-cms-path={`landing.whyChoose.headingLines.${index}`}>
                   {line}
                 </span>
               ))}
@@ -449,7 +516,9 @@ export default function VioletAtlasLanding({
       <section className="bg-white px-6 py-20">
         <div className="mx-auto max-w-[1280px] lg:px-10">
           <div className="mb-14 text-center">
-            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl">{content.testimonials.heading}</h2>
+            <h2 className="font-['DM_Serif_Display'] text-3xl text-[#1A1A2E] lg:text-4xl" data-cms-path="landing.testimonials.heading">
+              {content.testimonials.heading}
+            </h2>
             <p className="mt-3 text-base text-[#6B7280]">Trusted by thousands of business leaders and IT professionals.</p>
           </div>
 
@@ -503,13 +572,13 @@ export default function VioletAtlasLanding({
 
                 <div className="flex flex-col gap-3">
                   <a
-                    href={vendorCta.ctaHref}
+                    href={withPartnerPath(vendorCta.ctaHref, partnerSlug)}
                     className="rounded-full bg-[#5B35F5] px-8 py-4 text-center font-semibold text-white transition-colors hover:bg-[#4A28E0]"
                   >
                     {vendorCta.ctaLabel}
                   </a>
                   <a
-                    href="#"
+                    href="#software-catalog"
                     className="rounded-full border border-white/20 px-8 py-4 text-center font-semibold text-white transition-colors hover:border-white/40"
                   >
                     Learn More
@@ -526,7 +595,9 @@ export default function VioletAtlasLanding({
           <div className="mb-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="mb-4">{brandLogo}</div>
-              <p className="text-sm leading-relaxed text-[#9CA3AF]">{content.footer.description}</p>
+              <p className="text-sm leading-relaxed text-[#9CA3AF]" data-cms-path="landing.footer.description">
+                {content.footer.description}
+              </p>
             </div>
 
             {content.footer.columns.map((column) => (
@@ -535,7 +606,7 @@ export default function VioletAtlasLanding({
                 <ul className="flex flex-col gap-2">
                   {column.links.map((link) => (
                     <li key={link}>
-                      <a href="#" className="text-sm text-[#9CA3AF] transition-colors hover:text-white">
+                        <a href="#software-catalog" className="text-sm text-[#9CA3AF] transition-colors hover:text-white">
                         {link}
                       </a>
                     </li>
@@ -546,10 +617,12 @@ export default function VioletAtlasLanding({
           </div>
 
           <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 sm:flex-row">
-            <p className="text-sm text-[#6B7280]">{content.footer.copyright}</p>
+            <p className="text-sm text-[#6B7280]" data-cms-path="landing.footer.copyright">
+              {content.footer.copyright}
+            </p>
             <div className="flex gap-4">
               {content.footer.legalLinks.map((link) => (
-                <a key={link} href="#" className="text-sm text-[#6B7280] transition-colors hover:text-white">
+                <a key={link} href="#software-catalog" className="text-sm text-[#6B7280] transition-colors hover:text-white">
                   {link}
                 </a>
               ))}
@@ -558,7 +631,6 @@ export default function VioletAtlasLanding({
         </div>
       </footer>
 
-      <AdminFloatingButton />
     </div>
   );
 }
@@ -566,6 +638,30 @@ export default function VioletAtlasLanding({
 function resolveBrandLogo(brand: ThemePackage["landing"]["brand"] & { logo?: string }, theme: ThemePackage) {
   const source = brand.logo || theme.assets.logo;
   return <img src={source} alt={brand.logoAlt || theme.landing.brand.logoAlt} className="h-7 w-auto" />;
+}
+
+function withPartnerPath(href: string, partnerSlug: string) {
+  if (!href || href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("//")) {
+    return href;
+  }
+
+  if (href === `/${partnerSlug}` || href.startsWith(`/${partnerSlug}/`)) {
+    return href;
+  }
+
+  if (href === "/" || href === "/home") {
+    return `/${partnerSlug}`;
+  }
+
+  return `/${partnerSlug}${href}`;
+}
+
+function getProductHref(item: LandingSoftwareItem, partnerSlug: string) {
+  return item.weburl ? `/${partnerSlug}/products/${item.weburl}/overview` : "#software-catalog";
+}
+
+function getCompareHref(item: LandingSoftwareItem, partnerSlug: string) {
+  return item.weburl ? `/${partnerSlug}/compare/product?products=${item.weburl}` : "#software-catalog";
 }
 
 function buildTags(item: SoftwareItem) {

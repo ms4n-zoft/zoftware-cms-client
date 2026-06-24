@@ -1,0 +1,19 @@
+---
+import type { TenantClientConfig } from "../lib/clientApi";
+
+type Props = {
+  partnerSlug?: string;
+  tenantConfig?: TenantClientConfig | null;
+};
+
+const { partnerSlug = "", tenantConfig = null } = Astro.props;
+const tenantScript = tenantConfig
+  ? `
+window.__ZOFTWARE_TENANT_CONFIG__ = ${JSON.stringify(tenantConfig)};
+window.__ZOFTWARE_TENANT_OVERRIDES__ = ${JSON.stringify(tenantConfig.contentOverrides || {})};
+window.__ZOFTWARE_PARTNER_SLUG__ = ${JSON.stringify(partnerSlug)};
+`
+  : "";
+---
+
+{tenantScript ? <script is:inline set:html={tenantScript}></script> : null}

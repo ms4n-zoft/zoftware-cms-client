@@ -1,0 +1,623 @@
+- generic [ref=e3]:
+  - complementary "Admin sections" [ref=e4]:
+    - link "White-label CMS" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e6]: White-label CMS
+    - navigation [ref=e7]:
+      - button "01 Package" [ref=e8] [cursor=pointer]:
+        - generic [ref=e9]: "01"
+        - text: Package
+      - button "02 Content" [ref=e10] [cursor=pointer]:
+        - generic [ref=e11]: "02"
+        - text: Content
+  - main [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - paragraph [ref=e15]: Step one
+        - heading "Choose the site package." [level=1] [ref=e16]
+        - generic [ref=e17]: A package controls layout, colors, typography, and the landing page structure together.
+      - generic [ref=e18]:
+        - button "Signal Forge AI-powered enterprise software discovery with a bold editorial landing layout. Syne + Manrope" [ref=e19] [cursor=pointer]:
+          - generic [ref=e21]: Signal Forge
+          - generic [ref=e27]: AI-powered enterprise software discovery with a bold editorial landing layout.
+          - generic [ref=e28]: Syne + Manrope
+        - button "Violet Atlas A warm discovery marketplace package with serif headlines, rounded cards, and a vivid purple action system. Custom font system" [active] [ref=e29] [cursor=pointer]:
+          - generic [ref=e31]: Violet Atlas
+          - generic [ref=e37]: A warm discovery marketplace package with serif headlines, rounded cards, and a vivid purple action system.
+          - generic [ref=e38]: Custom font system
+    - complementary [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: Violet Atlas
+          - text: Live landing preview
+        - link "Open site" [ref=e43] [cursor=pointer]:
+          - /url: /home
+      - iframe [ref=e44]:
+        - generic [ref=f2e653]:
+          - generic [ref=f2e655]:
+            - generic [ref=f2e656]: "New: AI-Powered RFP Builder is live"
+            - link "Explore Now →" [ref=f2e657] [cursor=pointer]:
+              - /url: "#"
+          - banner [ref=f2e658]:
+            - generic [ref=f2e659]:
+              - link "ZoftwareHub logo" [ref=f2e660] [cursor=pointer]:
+                - /url: /
+                - img "ZoftwareHub logo" [ref=f2e661]
+              - link "List Your Software" [ref=f2e663] [cursor=pointer]:
+                - /url: "#"
+          - generic [ref=f2e666]:
+            - generic [ref=f2e670]: AI-Powered Software Discovery
+            - heading "Discover the Right Business Software — Faster." [level=1] [ref=f2e671]:
+              - generic [ref=f2e672]: Discover the Right
+              - generic [ref=f2e673]: Business Software —
+              - generic [ref=f2e674]: Faster.
+            - paragraph [ref=f2e675]: 10,000+ verified B2B software products. AI-powered matching. Zero sales pressure.
+            - generic [ref=f2e676]:
+              - img [ref=f2e677]
+              - textbox "Search software, categories, use cases..." [ref=f2e679]
+              - button "Search" [ref=f2e680] [cursor=pointer]
+            - generic [ref=f2e681]:
+              - generic [ref=f2e682]: "Popular:"
+              - button "CRM" [ref=f2e683] [cursor=pointer]
+              - button "ERP" [ref=f2e684] [cursor=pointer]
+              - button "HR" [ref=f2e685] [cursor=pointer]
+              - button "Marketing" [ref=f2e686] [cursor=pointer]
+            - generic [ref=f2e687]:
+              - generic [ref=f2e688]:
+                - generic [ref=f2e689]: 10,881+
+                - generic [ref=f2e690]: Software Listed
+              - generic [ref=f2e691]:
+                - generic [ref=f2e692]: 300+
+                - generic [ref=f2e693]: Categories
+              - generic [ref=f2e694]:
+                - generic [ref=f2e695]: 51,000+
+                - generic [ref=f2e696]: Reviews
+              - generic [ref=f2e697]:
+                - generic [ref=f2e698]: 200+
+                - generic [ref=f2e699]: Avg Criteria
+          - generic [ref=f2e701]:
+            - paragraph [ref=f2e702]: Trusted by teams at leading companies
+            - generic [ref=f2e703]:
+              - generic [ref=f2e704]: Salesforce
+              - generic [ref=f2e705]: Microsoft
+              - generic [ref=f2e706]: SAP
+              - generic [ref=f2e707]: Oracle
+              - generic [ref=f2e708]: HubSpot
+              - generic [ref=f2e709]: Workday
+              - generic [ref=f2e710]: Saturday
+              - generic [ref=f2e711]: Accenture
+          - generic [ref=f2e713]:
+            - generic [ref=f2e714]:
+              - generic [ref=f2e715]:
+                - img [ref=f2e716]
+                - generic [ref=f2e718]: AI-Powered Tools
+              - heading "Meet Your AI Discovery Suite" [level=2] [ref=f2e719]
+              - paragraph [ref=f2e720]: Four intelligent tools working together to make your software decisions faster, smarter, and more confident.
+            - generic [ref=f2e721]:
+              - generic [ref=f2e722]:
+                - generic: "01"
+                - img [ref=f2e724]
+                - heading "Strategy Builder" [level=3] [ref=f2e726]
+                - paragraph [ref=f2e727]: AI-guided frameworks to map your software needs, define requirements, and build a clear technology roadmap.
+                - link "Try it now →" [ref=f2e728] [cursor=pointer]:
+                  - /url: "#"
+              - generic [ref=f2e729]:
+                - generic: "02"
+                - img [ref=f2e731]
+                - heading "RFP Builder" [level=3] [ref=f2e733]
+                - paragraph [ref=f2e734]: Generate professional, vendor-ready RFPs in minutes. AI tailors each document to your specific requirements and industry.
+                - link "Try it now →" [ref=f2e735] [cursor=pointer]:
+                  - /url: "#"
+              - generic [ref=f2e736]:
+                - generic: "03"
+                - img [ref=f2e738]
+                - heading "Smart Compare" [level=3] [ref=f2e740]
+                - paragraph [ref=f2e741]: Side-by-side feature and pricing comparisons with weighted fit scoring that removes guesswork.
+                - link "Try it now →" [ref=f2e742] [cursor=pointer]:
+                  - /url: "#"
+              - generic [ref=f2e743]:
+                - generic: "04"
+                - img [ref=f2e745]
+                - heading "Expert Connect" [level=3] [ref=f2e747]
+                - paragraph [ref=f2e748]: Get matched with implementation specialists who know your shortlisted platforms and deployment constraints.
+                - link "Try it now →" [ref=f2e749] [cursor=pointer]:
+                  - /url: "#"
+          - generic [ref=f2e751]:
+            - generic [ref=f2e752]:
+              - heading "Featured Software" [level=2] [ref=f2e753]
+              - generic [ref=f2e754]:
+                - button "All" [ref=f2e755] [cursor=pointer]
+                - button "CRM" [ref=f2e756] [cursor=pointer]
+                - button "ERP" [ref=f2e757] [cursor=pointer]
+                - button "HR" [ref=f2e758] [cursor=pointer]
+                - button "Marketing" [ref=f2e759] [cursor=pointer]
+            - generic [ref=f2e760]:
+              - article [ref=f2e761]:
+                - generic [ref=f2e762]:
+                  - generic [ref=f2e764]: SC
+                  - generic [ref=f2e765]:
+                    - generic [ref=f2e766]: Salesforce CRM
+                    - generic [ref=f2e767]: Salesforce Inc.
+                - generic [ref=f2e768]:
+                  - img [ref=f2e770]
+                  - img [ref=f2e773]
+                  - img [ref=f2e776]
+                  - img [ref=f2e779]
+                  - img [ref=f2e782]
+                  - generic [ref=f2e784]: "4.8"
+                - generic [ref=f2e785]:
+                  - generic [ref=f2e786]: Sales automation
+                  - generic [ref=f2e787]: AI insights
+                  - generic [ref=f2e788]: and pipeline visibility for larger revenue teams.
+                - generic [ref=f2e790]: From $25/user/mo
+                - generic [ref=f2e791]:
+                  - button "View Details" [ref=f2e792] [cursor=pointer]
+                  - button "Compare" [ref=f2e793] [cursor=pointer]
+              - article [ref=f2e794]:
+                - generic [ref=f2e795]:
+                  - generic [ref=f2e797]: SS
+                  - generic [ref=f2e798]:
+                    - generic [ref=f2e799]: SAP S/4HANA
+                    - generic [ref=f2e800]: SAP SE
+                - generic [ref=f2e801]:
+                  - img [ref=f2e803]
+                  - img [ref=f2e806]
+                  - img [ref=f2e809]
+                  - img [ref=f2e812]
+                  - img [ref=f2e815]
+                  - generic [ref=f2e817]: "4.6"
+                - generic [ref=f2e818]:
+                  - generic [ref=f2e819]: Intelligent ERP for finance
+                  - generic [ref=f2e820]: supply chain
+                  - generic [ref=f2e821]: and enterprise operations at global scale.
+                - generic [ref=f2e823]: Custom Pricing
+                - generic [ref=f2e824]:
+                  - button "View Details" [ref=f2e825] [cursor=pointer]
+                  - button "Compare" [ref=f2e826] [cursor=pointer]
+              - article [ref=f2e827]:
+                - generic [ref=f2e828]:
+                  - generic [ref=f2e830]: HMH
+                  - generic [ref=f2e831]:
+                    - generic [ref=f2e832]: HubSpot Marketing Hub
+                    - generic [ref=f2e833]: HubSpot Inc.
+                - generic [ref=f2e834]:
+                  - img [ref=f2e836]
+                  - img [ref=f2e839]
+                  - img [ref=f2e842]
+                  - img [ref=f2e845]
+                  - img [ref=f2e848]
+                  - generic [ref=f2e850]: "4.7"
+                - generic [ref=f2e851]:
+                  - generic [ref=f2e852]: Campaign automation
+                  - generic [ref=f2e853]: inbound lead management
+                  - generic [ref=f2e854]: and SEO performance in one stack.
+                - generic [ref=f2e856]: From $45/mo
+                - generic [ref=f2e857]:
+                  - button "View Details" [ref=f2e858] [cursor=pointer]
+                  - button "Compare" [ref=f2e859] [cursor=pointer]
+              - article [ref=f2e860]:
+                - generic [ref=f2e861]:
+                  - generic [ref=f2e863]: WH
+                  - generic [ref=f2e864]:
+                    - generic [ref=f2e865]: Workday HCM
+                    - generic [ref=f2e866]: Workday Inc.
+                - generic [ref=f2e867]:
+                  - img [ref=f2e869]
+                  - img [ref=f2e872]
+                  - img [ref=f2e875]
+                  - img [ref=f2e878]
+                  - img [ref=f2e881]
+                  - generic [ref=f2e883]: "4.5"
+                - generic [ref=f2e884]:
+                  - generic [ref=f2e885]: Workforce planning
+                  - generic [ref=f2e886]: payroll
+                  - generic [ref=f2e887]: and recruiting workflows for distributed organizations.
+                - generic [ref=f2e889]: Custom Pricing
+                - generic [ref=f2e890]:
+                  - button "View Details" [ref=f2e891] [cursor=pointer]
+                  - button "Compare" [ref=f2e892] [cursor=pointer]
+              - article [ref=f2e893]:
+                - generic [ref=f2e894]:
+                  - generic [ref=f2e896]: MD3
+                  - generic [ref=f2e897]:
+                    - generic [ref=f2e898]: Microsoft Dynamics 365
+                    - generic [ref=f2e899]: Microsoft Corp.
+                - generic [ref=f2e900]:
+                  - img [ref=f2e902]
+                  - img [ref=f2e905]
+                  - img [ref=f2e908]
+                  - img [ref=f2e911]
+                  - img [ref=f2e914]
+                  - generic [ref=f2e916]: "4.4"
+                - generic [ref=f2e918]: Unified ERP and CRM with Copilot workflows and analytics across the Microsoft stack.
+                - generic [ref=f2e920]: From $65/user/mo
+                - generic [ref=f2e921]:
+                  - button "View Details" [ref=f2e922] [cursor=pointer]
+                  - button "Compare" [ref=f2e923] [cursor=pointer]
+              - article [ref=f2e924]:
+                - generic [ref=f2e925]:
+                  - generic [ref=f2e927]: "ON"
+                  - generic [ref=f2e928]:
+                    - generic [ref=f2e929]: Oracle NetSuite
+                    - generic [ref=f2e930]: Oracle Corp.
+                - generic [ref=f2e931]:
+                  - img [ref=f2e933]
+                  - img [ref=f2e936]
+                  - img [ref=f2e939]
+                  - img [ref=f2e942]
+                  - img [ref=f2e945]
+                  - generic [ref=f2e947]: "4.3"
+                - generic [ref=f2e948]:
+                  - generic [ref=f2e949]: Cloud ERP for inventory
+                  - generic [ref=f2e950]: financials
+                  - generic [ref=f2e951]: ecommerce
+                - generic [ref=f2e953]: From $999/mo
+                - generic [ref=f2e954]:
+                  - button "View Details" [ref=f2e955] [cursor=pointer]
+                  - button "Compare" [ref=f2e956] [cursor=pointer]
+              - article [ref=f2e957]:
+                - generic [ref=f2e958]:
+                  - generic [ref=f2e960]: ZC
+                  - generic [ref=f2e961]:
+                    - generic [ref=f2e962]: Zoho CRM
+                    - generic [ref=f2e963]: Zoho Corp.
+                - generic [ref=f2e964]:
+                  - img [ref=f2e966]
+                  - img [ref=f2e969]
+                  - img [ref=f2e972]
+                  - img [ref=f2e975]
+                  - img [ref=f2e978]
+                  - generic [ref=f2e980]: "4.5"
+                - generic [ref=f2e981]:
+                  - generic [ref=f2e982]: Sales CRM with automation
+                  - generic [ref=f2e983]: analytics
+                  - generic [ref=f2e984]: and an accessible entry point for growing teams.
+                - generic [ref=f2e986]: From $14/user/mo
+                - generic [ref=f2e987]:
+                  - button "View Details" [ref=f2e988] [cursor=pointer]
+                  - button "Compare" [ref=f2e989] [cursor=pointer]
+              - article [ref=f2e990]:
+                - generic [ref=f2e991]:
+                  - generic [ref=f2e993]: F
+                  - generic [ref=f2e994]:
+                    - generic [ref=f2e995]: Freshdesk
+                    - generic [ref=f2e996]: Freshworks Inc.
+                - generic [ref=f2e997]:
+                  - img [ref=f2e999]
+                  - img [ref=f2e1002]
+                  - img [ref=f2e1005]
+                  - img [ref=f2e1008]
+                  - img [ref=f2e1011]
+                  - generic [ref=f2e1013]: "4.6"
+                - generic [ref=f2e1014]:
+                  - generic [ref=f2e1015]: Help desk and service workflows with AI assistance
+                  - generic [ref=f2e1016]: automation
+                  - generic [ref=f2e1017]: and omnichannel support.
+                - generic [ref=f2e1019]: From $15/agent/mo
+                - generic [ref=f2e1020]:
+                  - button "View Details" [ref=f2e1021] [cursor=pointer]
+                  - button "Compare" [ref=f2e1022] [cursor=pointer]
+              - article [ref=f2e1023]:
+                - generic [ref=f2e1024]:
+                  - generic [ref=f2e1026]: M
+                  - generic [ref=f2e1027]:
+                    - generic [ref=f2e1028]: Monday.com
+                    - generic [ref=f2e1029]: Monday.com Ltd.
+                - generic [ref=f2e1030]:
+                  - img [ref=f2e1032]
+                  - img [ref=f2e1035]
+                  - img [ref=f2e1038]
+                  - img [ref=f2e1041]
+                  - img [ref=f2e1044]
+                  - generic [ref=f2e1046]: "4.7"
+                - generic [ref=f2e1047]:
+                  - generic [ref=f2e1048]: Workflows
+                  - generic [ref=f2e1049]: dashboards
+                  - generic [ref=f2e1050]: and collaborative planning across project and campaign teams.
+                - generic [ref=f2e1052]: From $9/seat/mo
+                - generic [ref=f2e1053]:
+                  - button "View Details" [ref=f2e1054] [cursor=pointer]
+                  - button "Compare" [ref=f2e1055] [cursor=pointer]
+            - button "Browse All 10,000+ Software →" [ref=f2e1057] [cursor=pointer]
+          - generic [ref=f2e1060]:
+            - generic [ref=f2e1061]:
+              - generic [ref=f2e1062]: 10,000+
+              - generic [ref=f2e1063]: Software Listed
+            - generic [ref=f2e1064]:
+              - generic [ref=f2e1065]: 500+
+              - generic [ref=f2e1066]: Categories Covered
+            - generic [ref=f2e1067]:
+              - generic [ref=f2e1068]: 50,000+
+              - generic [ref=f2e1069]: Verified Reviews
+            - generic [ref=f2e1070]:
+              - generic [ref=f2e1071]: 98%
+              - generic [ref=f2e1072]: Recommendation Accuracy
+          - generic [ref=f2e1074]:
+            - generic [ref=f2e1075]:
+              - heading "How It Works" [level=2] [ref=f2e1076]
+              - paragraph [ref=f2e1077]: A clear path from uncertainty to implementation — in four simple steps.
+            - generic [ref=f2e1078]:
+              - generic [ref=f2e1079]:
+                - generic [ref=f2e1081]: "1"
+                - heading "Discover" [level=3] [ref=f2e1082]
+                - paragraph [ref=f2e1083]: Browse 10K+ verified software with smart AI filters.
+              - generic [ref=f2e1084]:
+                - generic [ref=f2e1086]: "2"
+                - heading "Evaluate" [level=3] [ref=f2e1087]
+                - paragraph [ref=f2e1088]: Read reviews, compare features, and check real pricing data.
+              - generic [ref=f2e1089]:
+                - generic [ref=f2e1091]: "3"
+                - heading "Build Your RFP" [level=3] [ref=f2e1092]
+                - paragraph [ref=f2e1093]: AI-generated RFPs tailored precisely to your requirements.
+              - generic [ref=f2e1094]:
+                - generic [ref=f2e1096]: "4"
+                - heading "Implement" [level=3] [ref=f2e1097]
+                - paragraph [ref=f2e1098]: Connect with certified implementation experts for your platform.
+          - generic [ref=f2e1100]:
+            - generic [ref=f2e1101]:
+              - heading "Browse by Category" [level=2] [ref=f2e1102]
+              - generic [ref=f2e1103]:
+                - button "By Function" [ref=f2e1104] [cursor=pointer]
+                - button "By Industry" [ref=f2e1105] [cursor=pointer]
+            - generic [ref=f2e1106]:
+              - button "C CRM" [ref=f2e1107] [cursor=pointer]:
+                - generic [ref=f2e1109]: C
+                - generic [ref=f2e1110]: CRM
+              - button "E ERP" [ref=f2e1111] [cursor=pointer]:
+                - generic [ref=f2e1113]: E
+                - generic [ref=f2e1114]: ERP
+              - button "H& HR & People" [ref=f2e1115] [cursor=pointer]:
+                - generic [ref=f2e1117]: H&
+                - generic [ref=f2e1118]: HR & People
+              - button "F& Finance & Accounting" [ref=f2e1119] [cursor=pointer]:
+                - generic [ref=f2e1121]: F&
+                - generic [ref=f2e1122]: Finance & Accounting
+              - button "MA Marketing Auto." [ref=f2e1123] [cursor=pointer]:
+                - generic [ref=f2e1125]: MA
+                - generic [ref=f2e1126]: Marketing Auto.
+              - button "BI Business Intelligence" [ref=f2e1127] [cursor=pointer]:
+                - generic [ref=f2e1129]: BI
+                - generic [ref=f2e1130]: Business Intelligence
+              - button "PM Project Mgmt" [ref=f2e1131] [cursor=pointer]:
+                - generic [ref=f2e1133]: PM
+                - generic [ref=f2e1134]: Project Mgmt
+              - button "C Cybersecurity" [ref=f2e1135] [cursor=pointer]:
+                - generic [ref=f2e1137]: C
+                - generic [ref=f2e1138]: Cybersecurity
+              - button "CS Customer Support" [ref=f2e1139] [cursor=pointer]:
+                - generic [ref=f2e1141]: CS
+                - generic [ref=f2e1142]: Customer Support
+              - button "C Collaboration" [ref=f2e1143] [cursor=pointer]:
+                - generic [ref=f2e1145]: C
+                - generic [ref=f2e1146]: Collaboration
+              - button "SI Sales Intelligence" [ref=f2e1147] [cursor=pointer]:
+                - generic [ref=f2e1149]: SI
+                - generic [ref=f2e1150]: Sales Intelligence
+              - button "SC Supply Chain" [ref=f2e1151] [cursor=pointer]:
+                - generic [ref=f2e1153]: SC
+                - generic [ref=f2e1154]: Supply Chain
+          - generic [ref=f2e1156]:
+            - generic [ref=f2e1157]:
+              - generic [ref=f2e1160]: Why Choose Us
+              - heading "The Smarter Way to Choose Business Software" [level=2] [ref=f2e1161]:
+                - generic [ref=f2e1162]: The Smarter Way to Choose
+                - generic [ref=f2e1163]: Business Software
+              - generic [ref=f2e1165]:
+                - generic [ref=f2e1166]:
+                  - img [ref=f2e1168]
+                  - generic [ref=f2e1170]:
+                    - generic [ref=f2e1171]: AI-powered matching based on your exact needs
+                    - generic [ref=f2e1172]: Proprietary AI analyzes 200+ criteria to surface the right fit.
+                - generic [ref=f2e1173]:
+                  - img [ref=f2e1175]
+                  - generic [ref=f2e1177]:
+                    - generic [ref=f2e1178]: 100% unbiased, vendor-neutral reviews
+                    - generic [ref=f2e1179]: We never accept sponsored placements or pay-to-rank deals.
+                - generic [ref=f2e1180]:
+                  - img [ref=f2e1182]
+                  - generic [ref=f2e1184]:
+                    - generic [ref=f2e1185]: Side-by-side comparisons with fit scoring
+                    - generic [ref=f2e1186]: Quantified head-to-head breakdowns that eliminate guesswork.
+                - generic [ref=f2e1187]:
+                  - img [ref=f2e1189]
+                  - generic [ref=f2e1191]:
+                    - generic [ref=f2e1192]: Free RFP generation in minutes
+                    - generic [ref=f2e1193]: What used to cost $20K in consulting is now instant and free.
+                - generic [ref=f2e1194]:
+                  - img [ref=f2e1196]
+                  - generic [ref=f2e1198]:
+                    - generic [ref=f2e1199]: Expert implementation guidance
+                    - generic [ref=f2e1200]: Vetted certified partners ready to bring your software live.
+            - generic [ref=f2e1201]:
+              - generic [ref=f2e1202]:
+                - generic [ref=f2e1203]:
+                  - generic [ref=f2e1204]:
+                    - img [ref=f2e1206]
+                    - generic [ref=f2e1208]: Before ZoftwareHub
+                  - generic [ref=f2e1209]:
+                    - generic [ref=f2e1210]:
+                      - img [ref=f2e1212]
+                      - generic [ref=f2e1214]: Months of manual research
+                    - generic [ref=f2e1215]:
+                      - img [ref=f2e1217]
+                      - generic [ref=f2e1219]: Biased vendor-sponsored demos
+                    - generic [ref=f2e1220]:
+                      - img [ref=f2e1222]
+                      - generic [ref=f2e1224]: Missed business requirements
+                    - generic [ref=f2e1225]:
+                      - img [ref=f2e1227]
+                      - generic [ref=f2e1229]: Costly budget overruns
+                    - generic [ref=f2e1230]:
+                      - img [ref=f2e1232]
+                      - generic [ref=f2e1234]: Implementation failures
+                - generic [ref=f2e1235]:
+                  - generic [ref=f2e1236]:
+                    - img [ref=f2e1238]
+                    - generic [ref=f2e1240]: After ZoftwareHub
+                  - generic [ref=f2e1241]:
+                    - generic [ref=f2e1242]:
+                      - img [ref=f2e1244]
+                      - generic [ref=f2e1246]: Matched in minutes with AI
+                    - generic [ref=f2e1247]:
+                      - img [ref=f2e1249]
+                      - generic [ref=f2e1251]: Neutral AI analysis, zero bias
+                    - generic [ref=f2e1252]:
+                      - img [ref=f2e1254]
+                      - generic [ref=f2e1256]: Clear structured requirements
+                    - generic [ref=f2e1257]:
+                      - img [ref=f2e1259]
+                      - generic [ref=f2e1261]: Confident, informed decisions
+                    - generic [ref=f2e1262]:
+                      - img [ref=f2e1264]
+                      - generic [ref=f2e1266]: Expert-guided implementation
+              - generic [ref=f2e1267]:
+                - generic [ref=f2e1268]: From 3 months → 2 weeks
+                - paragraph [ref=f2e1269]: Average time saved on software evaluation
+          - generic [ref=f2e1271]:
+            - generic [ref=f2e1272]:
+              - heading "What Our Users Say" [level=2] [ref=f2e1273]
+              - paragraph [ref=f2e1274]: Trusted by thousands of business leaders and IT professionals.
+            - generic [ref=f2e1275]:
+              - article [ref=f2e1276]:
+                - generic [ref=f2e1277]: "\""
+                - generic [ref=f2e1278]:
+                  - img [ref=f2e1280]
+                  - img [ref=f2e1283]
+                  - img [ref=f2e1286]
+                  - img [ref=f2e1289]
+                  - img [ref=f2e1292]
+                  - generic [ref=f2e1294]: "5.0"
+                - paragraph [ref=f2e1295]: "\"ZoftwareHub cut our software evaluation time from 3 months to 2 weeks. The AI matching was incredibly accurate.\""
+                - generic [ref=f2e1296]:
+                  - img "Sarah Chen" [ref=f2e1297]
+                  - generic [ref=f2e1298]:
+                    - generic [ref=f2e1299]: Sarah Chen
+                    - generic [ref=f2e1300]: Head of IT · TechCorp Global
+              - article [ref=f2e1301]:
+                - generic [ref=f2e1302]: "\""
+                - generic [ref=f2e1303]:
+                  - img [ref=f2e1305]
+                  - img [ref=f2e1308]
+                  - img [ref=f2e1311]
+                  - img [ref=f2e1314]
+                  - img [ref=f2e1317]
+                  - generic [ref=f2e1319]: "5.0"
+                - paragraph [ref=f2e1320]: "\"The RFP Builder alone saved us $20K in consulting fees. Absolutely game-changing for procurement teams.\""
+                - generic [ref=f2e1321]:
+                  - img "Marcus Williams" [ref=f2e1322]
+                  - generic [ref=f2e1323]:
+                    - generic [ref=f2e1324]: Marcus Williams
+                    - generic [ref=f2e1325]: VP Operations · Meridian Group
+              - article [ref=f2e1326]:
+                - generic [ref=f2e1327]: "\""
+                - generic [ref=f2e1328]:
+                  - img [ref=f2e1330]
+                  - img [ref=f2e1333]
+                  - img [ref=f2e1336]
+                  - img [ref=f2e1339]
+                  - img [ref=f2e1342]
+                  - generic [ref=f2e1344]: "5.0"
+                - paragraph [ref=f2e1345]: "\"Finally, a platform that understands B2B software buying. No more biased reviews or vendor-sponsored content.\""
+                - generic [ref=f2e1346]:
+                  - img "Priya Patel" [ref=f2e1347]
+                  - generic [ref=f2e1348]:
+                    - generic [ref=f2e1349]: Priya Patel
+                    - generic [ref=f2e1350]: CTO · Nexus Ventures
+          - generic [ref=f2e1356]:
+            - generic [ref=f2e1357]:
+              - img [ref=f2e1359]
+              - heading "List Your Software" [level=2] [ref=f2e1361]
+              - paragraph [ref=f2e1362]: Reach 50,000+ active B2B software buyers. Get discovered by the right companies at the right time with AI-powered matching.
+              - list [ref=f2e1363]:
+                - listitem [ref=f2e1364]:
+                  - img [ref=f2e1366]
+                  - text: Free listing with premium visibility options
+                - listitem [ref=f2e1368]:
+                  - img [ref=f2e1370]
+                  - text: AI-matched to relevant buyers
+                - listitem [ref=f2e1372]:
+                  - img [ref=f2e1374]
+                  - text: Real-time analytics dashboard
+            - generic [ref=f2e1376]:
+              - link "List Your Software →" [ref=f2e1377] [cursor=pointer]:
+                - /url: "#"
+              - link "Learn More" [ref=f2e1378] [cursor=pointer]:
+                - /url: "#"
+          - contentinfo [ref=f2e1379]:
+            - generic [ref=f2e1380]:
+              - generic [ref=f2e1381]:
+                - generic [ref=f2e1382]:
+                  - img "ZoftwareHub logo" [ref=f2e1384]
+                  - paragraph [ref=f2e1385]: The smarter way to discover, compare, and choose business software.
+                - generic [ref=f2e1386]:
+                  - heading "Product" [level=4] [ref=f2e1387]
+                  - list [ref=f2e1388]:
+                    - listitem [ref=f2e1389]:
+                      - link "Explore Software" [ref=f2e1390] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1391]:
+                      - link "AI Tools" [ref=f2e1392] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1393]:
+                      - link "Compare" [ref=f2e1394] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1395]:
+                      - link "RFP Builder" [ref=f2e1396] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1397]:
+                      - link "Categories" [ref=f2e1398] [cursor=pointer]:
+                        - /url: "#"
+                - generic [ref=f2e1399]:
+                  - heading "Company" [level=4] [ref=f2e1400]
+                  - list [ref=f2e1401]:
+                    - listitem [ref=f2e1402]:
+                      - link "About" [ref=f2e1403] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1404]:
+                      - link "Blog" [ref=f2e1405] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1406]:
+                      - link "Careers" [ref=f2e1407] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1408]:
+                      - link "Press" [ref=f2e1409] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1410]:
+                      - link "Contact" [ref=f2e1411] [cursor=pointer]:
+                        - /url: "#"
+                - generic [ref=f2e1412]:
+                  - heading "For Vendors" [level=4] [ref=f2e1413]
+                  - list [ref=f2e1414]:
+                    - listitem [ref=f2e1415]:
+                      - link "List Your Software" [ref=f2e1416] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1417]:
+                      - link "Vendor Dashboard" [ref=f2e1418] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1419]:
+                      - link "Pricing" [ref=f2e1420] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1421]:
+                      - link "Success Stories" [ref=f2e1422] [cursor=pointer]:
+                        - /url: "#"
+                    - listitem [ref=f2e1423]:
+                      - link "API Docs" [ref=f2e1424] [cursor=pointer]:
+                        - /url: "#"
+              - generic [ref=f2e1425]:
+                - paragraph [ref=f2e1426]: © 2024 ZoftwareHub. All rights reserved.
+                - generic [ref=f2e1427]:
+                  - link "Privacy" [ref=f2e1428] [cursor=pointer]:
+                    - /url: "#"
+                  - link "Terms" [ref=f2e1429] [cursor=pointer]:
+                    - /url: "#"
+                  - link "Cookies" [ref=f2e1430] [cursor=pointer]:
+                    - /url: "#"
+          - generic "Site tools" [ref=f2e1431]:
+            - link "Open onboarding" [ref=f2e1432] [cursor=pointer]:
+              - /url: /onboarding
+              - img [ref=f2e1433]
+              - text: Open onboarding
+            - link "Open admin in a new tab" [ref=f2e1435] [cursor=pointer]:
+              - /url: /admin
+              - img [ref=f2e1436]
+              - text: Open admin

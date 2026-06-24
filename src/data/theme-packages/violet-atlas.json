@@ -1,7 +1,7 @@
 {
   "id": "violet-atlas",
   "name": "Violet Atlas",
-  "description": "A warm discovery marketplace package with serif headlines, rounded cards, and a vivid purple action system.",
+  "description": "A warm software search page with rounded cards.",
   "character": "Warm discovery",
   "colors": {
     "background": "#FAFAF6",
@@ -50,8 +50,8 @@
       "logoAlt": "ZoftwareHub logo"
     },
     "announcement": {
-      "text": "New: AI-Powered RFP Builder is live",
-      "linkLabel": "Explore Now →",
+      "text": "New: Build a software shortlist in minutes",
+      "linkLabel": "Explore now →",
       "linkHref": "#"
     },
     "navigation": {
@@ -59,7 +59,7 @@
         { "label": "Get More Customers", "href": "/get-more-customers" },
         { "label": "Convert More Leads", "href": "/convert-more-leads" },
         { "label": "Retain Customers", "href": "/retain-customers" },
-        { "label": "AI & Automation", "href": "/ai-and-automation" }
+        { "label": "Software Guides", "href": "/ai-and-automation" }
       ],
       "signInLabel": "Sign In",
       "signInHref": "#",
@@ -67,29 +67,29 @@
       "primaryCtaHref": "#"
     },
     "hero": {
-      "eyebrow": "AI-Powered Software Discovery",
+      "eyebrow": "Software made simple",
       "headlineLines": [
         "Discover the Right",
         "Business Software —",
         "Faster."
       ],
-      "description": "10,000+ verified B2B software products. AI-powered matching. Zero sales pressure.",
-      "searchPlaceholder": "Search software, categories, use cases...",
+      "description": "Find and compare business software without the sales pressure.",
+      "searchPlaceholder": "Search software, categories, needs...",
       "searchButtonLabel": "Search",
       "stats": [
-        { "value": "10,881+", "label": "Software Listed" },
+        { "value": "10,881+", "label": "Software options" },
         { "value": "300+", "label": "Categories" },
         { "value": "51,000+", "label": "Reviews" },
-        { "value": "200+", "label": "Avg Criteria" }
+        { "value": "200+", "label": "Checks" }
       ],
-      "recommendationsEyebrow": "AI Match",
-      "recommendationsTitle": "Top Matches For You",
+      "recommendationsEyebrow": "Suggested picks",
+      "recommendationsTitle": "Good Matches For You",
       "recommendations": [
         { "name": "Salesforce CRM", "category": "Salesforce Inc.", "score": 94, "rating": 4.8 },
         { "name": "SAP S/4HANA", "category": "SAP SE", "score": 89, "rating": 4.6 },
         { "name": "HubSpot", "category": "HubSpot Inc.", "score": 91, "rating": 4.7 }
       ],
-      "recommendationsFilterLabel": "+ 9,997 more software matches available",
+      "recommendationsFilterLabel": "More options available",
       "recommendationsCtaLabel": "View Details →"
     },
     "trustedBy": {
@@ -97,33 +97,33 @@
       "items": ["Salesforce", "Microsoft", "SAP", "Oracle", "HubSpot", "Workday", "Saturday", "Accenture"]
     },
     "aiTools": {
-      "eyebrow": "AI-Powered Tools",
+      "eyebrow": "Helpful tools",
       "headingLines": [
-        "Meet Your AI Discovery Suite"
+        "Tools To Help You Choose"
       ],
       "items": [
         {
           "number": "01",
-          "title": "Strategy Builder",
-          "description": "AI-guided frameworks to map your software needs, define requirements, and build a clear technology roadmap.",
+          "title": "Shortlist Builder",
+          "description": "Create a focused list of software options for your business.",
           "icon": "strategy"
         },
         {
           "number": "02",
-          "title": "RFP Builder",
-          "description": "Generate professional, vendor-ready RFPs in minutes. AI tailors each document to your specific requirements and industry.",
+          "title": "Request Builder",
+          "description": "Write a clear request you can share with vendors.",
           "icon": "rfp"
         },
         {
           "number": "03",
           "title": "Smart Compare",
-          "description": "Side-by-side feature and pricing comparisons with weighted fit scoring that removes guesswork.",
+          "description": "Compare features and pricing side by side.",
           "icon": "compare"
         },
         {
           "number": "04",
-          "title": "Expert Connect",
-          "description": "Get matched with implementation specialists who know your shortlisted platforms and deployment constraints.",
+          "title": "Expert Help",
+          "description": "Talk to someone who can help you make a clear choice.",
           "icon": "expert"
         }
       ],
@@ -141,7 +141,7 @@
           "rating": 4.8,
           "tier": "From $25/user/mo",
           "tierTone": "accent",
-          "description": "Salesforce Inc. · Sales automation, AI insights, and pipeline visibility for larger revenue teams."
+          "description": "Salesforce Inc. · Sales and customer management for larger teams."
         },
         {
           "abbr": "SAP",
@@ -150,7 +150,7 @@
           "rating": 4.6,
           "tier": "Custom Pricing",
           "tierTone": "neutral",
-          "description": "SAP SE · Intelligent ERP for finance, supply chain, and enterprise operations at global scale."
+          "description": "SAP SE · Finance, supply chain, and operations management."
         },
         {
           "abbr": "HS",
@@ -159,7 +159,7 @@
           "rating": 4.7,
           "tier": "From $45/mo",
           "tierTone": "accent",
-          "description": "HubSpot Inc. · Campaign automation, inbound lead management, and SEO performance in one stack."
+          "description": "HubSpot Inc. · Marketing campaigns, leads, and website growth."
         },
         {
           "abbr": "WD",
@@ -168,7 +168,7 @@
           "rating": 4.5,
           "tier": "Custom Pricing",
           "tierTone": "neutral",
-          "description": "Workday Inc. · Workforce planning, payroll, and recruiting workflows for distributed organizations."
+          "description": "Workday Inc. · People planning, payroll, and hiring."
         },
         {
           "abbr": "MS",
@@ -177,7 +177,7 @@
           "rating": 4.4,
           "tier": "From $65/user/mo",
           "tierTone": "accent",
-          "description": "Microsoft Corp. · Unified ERP and CRM with Copilot workflows and analytics across the Microsoft stack."
+          "description": "Microsoft Corp. · Sales, finance, and customer work in one place."
         },
         {
           "abbr": "NS",
@@ -186,7 +186,7 @@
           "rating": 4.3,
           "tier": "From $999/mo",
           "tierTone": "neutral",
-          "description": "Oracle Corp. · Cloud ERP for inventory, financials, ecommerce, and operational planning."
+          "description": "Oracle Corp. · Inventory, finance, ecommerce, and planning."
         },
         {
           "abbr": "ZO",
@@ -195,7 +195,7 @@
           "rating": 4.5,
           "tier": "From $14/user/mo",
           "tierTone": "accent",
-          "description": "Zoho Corp. · Sales CRM with automation, analytics, and an accessible entry point for growing teams."
+          "description": "Zoho Corp. · Sales CRM for growing teams."
         },
         {
           "abbr": "FD",
@@ -204,7 +204,7 @@
           "rating": 4.6,
           "tier": "From $15/agent/mo",
           "tierTone": "accent",
-          "description": "Freshworks Inc. · Help desk and service workflows with AI assistance, automation, and omnichannel support."
+          "description": "Freshworks Inc. · Help desk and customer support."
         },
         {
           "abbr": "MO",
@@ -213,17 +213,17 @@
           "rating": 4.7,
           "tier": "From $9/seat/mo",
           "tierTone": "accent",
-          "description": "Monday.com Ltd. · Workflows, dashboards, and collaborative planning across project and campaign teams."
+          "description": "Monday.com Ltd. · Team planning for projects and campaigns."
         }
       ],
       "primaryActionLabel": "View Details",
       "secondaryActionLabel": "Compare"
     },
     "impactStats": [
-      { "value": "10,000+", "label": "Software Listed" },
+      { "value": "10,000+", "label": "Software options" },
       { "value": "500+", "label": "Categories Covered" },
       { "value": "50,000+", "label": "Verified Reviews" },
-      { "value": "98%", "label": "Recommendation Accuracy" }
+      { "value": "98%", "label": "Useful matches" }
     ],
     "process": {
       "eyebrow": "How It Works",
@@ -232,22 +232,22 @@
         {
           "number": "1",
           "title": "Discover",
-          "description": "Browse 10K+ verified software with smart AI filters."
+          "description": "Browse software by category and need."
         },
         {
           "number": "2",
-          "title": "Evaluate",
-          "description": "Read reviews, compare features, and check real pricing data."
+          "title": "Compare",
+          "description": "Read reviews, compare features, and check pricing."
         },
         {
           "number": "3",
-          "title": "Build Your RFP",
-          "description": "AI-generated RFPs tailored precisely to your requirements."
+          "title": "Write a Request",
+          "description": "Create a clear request to share with vendors."
         },
         {
           "number": "4",
-          "title": "Implement",
-          "description": "Connect with certified implementation experts for your platform."
+          "title": "Get Help",
+          "description": "Connect with experts who can guide your next step."
         }
       ]
     },
@@ -262,7 +262,7 @@
             "ERP",
             "HR & People",
             "Finance & Accounting",
-            "Marketing Auto.",
+            "Marketing",
             "Business Intelligence",
             "Project Mgmt",
             "Cybersecurity",
@@ -294,46 +294,46 @@
     "whyChoose": {
       "eyebrow": "Why Choose Us",
       "headingLines": [
-        "The Smarter Way to Choose",
+        "A Simpler Way to Choose",
         "Business Software"
       ],
       "items": [
         {
-          "title": "AI-powered matching based on your exact needs",
-          "description": "Proprietary AI analyzes 200+ criteria to surface the right fit."
+          "title": "Suggestions based on your needs",
+          "description": "See options that fit what you are looking for."
         },
         {
-          "title": "100% unbiased, vendor-neutral reviews",
-          "description": "We never accept sponsored placements or pay-to-rank deals."
+          "title": "Useful reviews",
+          "description": "Read reviews that help you compare clearly."
         },
         {
-          "title": "Side-by-side comparisons with fit scoring",
-          "description": "Quantified head-to-head breakdowns that eliminate guesswork."
+          "title": "Side-by-side comparisons",
+          "description": "Compare important details in one place."
         },
         {
-          "title": "Free RFP generation in minutes",
-          "description": "What used to cost $20K in consulting is now instant and free."
+          "title": "Simple request builder",
+          "description": "Write a clear request in less time."
         },
         {
-          "title": "Expert implementation guidance",
-          "description": "Vetted certified partners ready to bring your software live."
+          "title": "Expert guidance",
+          "description": "Talk to people who can help with your choice."
         }
       ],
       "beforeLabel": "Before ZoftwareHub",
       "beforeItems": [
         "Months of manual research",
-        "Biased vendor-sponsored demos",
-        "Missed business requirements",
+        "Biased demos",
+        "Missed needs",
         "Costly budget overruns",
-        "Implementation failures"
+        "Difficult rollout"
       ],
       "afterLabel": "After ZoftwareHub",
       "afterItems": [
-        "Matched in minutes with AI",
-        "Neutral AI analysis, zero bias",
-        "Clear structured requirements",
+        "Quick suggestions",
+        "Clear comparisons",
+        "Clear requests",
         "Confident, informed decisions",
-        "Expert-guided implementation"
+        "Expert help"
       ]
     },
     "testimonials": {
@@ -341,19 +341,19 @@
       "heading": "What Our Users Say",
       "items": [
         {
-          "quote": "\"ZoftwareHub cut our software evaluation time from 3 months to 2 weeks. The AI matching was incredibly accurate.\"",
+          "quote": "\"ZoftwareHub helped us compare software faster and choose with confidence.\"",
           "name": "Sarah Chen",
           "role": "Head of IT · TechCorp Global",
           "avatar": "https://api.builder.io/api/v1/image/assets/TEMP/33c0cc390e9de14df848064a8e73d28ce62342aa?width=80"
         },
         {
-          "quote": "\"The RFP Builder alone saved us $20K in consulting fees. Absolutely game-changing for procurement teams.\"",
+          "quote": "\"The request builder saved us time and made vendor conversations easier.\"",
           "name": "Marcus Williams",
           "role": "VP Operations · Meridian Group",
           "avatar": "https://api.builder.io/api/v1/image/assets/TEMP/a90dfb255123936172e4b0eb772431e3b416fa5c?width=80"
         },
         {
-          "quote": "\"Finally, a platform that understands B2B software buying. No more biased reviews or vendor-sponsored content.\"",
+          "quote": "\"Finally, a simple way to compare software without pressure.\"",
           "name": "Priya Patel",
           "role": "CTO · Nexus Ventures",
           "avatar": "https://api.builder.io/api/v1/image/assets/TEMP/d78d1116600b38fdc56bb37fbc54c4dc97266937?width=80"
@@ -364,11 +364,11 @@
       {
         "eyebrow": "For Vendors",
         "titleLines": ["List Your Software"],
-        "description": "Reach 50,000+ active B2B software buyers. Get discovered by the right companies at the right time with AI-powered matching.",
+        "description": "Reach companies that are actively looking for software.",
         "items": [
           "Free listing with premium visibility options",
-          "AI-matched to relevant buyers",
-          "Real-time analytics dashboard"
+          "Show up in relevant searches",
+          "Simple performance reports"
         ],
         "ctaLabel": "List Your Software →",
         "ctaHref": "#",
@@ -379,7 +379,7 @@
       "headlineLines": [
         "Start Smarter Software Discovery"
       ],
-      "description": "A modern software evaluation flow for enterprise teams.",
+      "description": "A simple way for teams to choose software.",
       "primaryLabel": "Get Started",
       "primaryHref": "#",
       "secondaryLabel": "Talk to an Expert",
@@ -394,7 +394,7 @@
       "columns": [
         {
           "title": "Product",
-          "links": ["Explore Software", "AI Tools", "Compare", "RFP Builder", "Categories"]
+          "links": ["Explore Software", "Tools", "Compare", "Request Builder", "Categories"]
         },
         {
           "title": "Company",
@@ -402,12 +402,12 @@
         },
         {
           "title": "For Vendors",
-          "links": ["List Your Software", "Vendor Dashboard", "Pricing", "Success Stories", "API Docs"]
+          "links": ["List Your Software", "Dashboard", "Pricing", "Success Stories", "Help"]
         }
       ],
       "newsletter": {
         "title": "Newsletter",
-        "description": "Get the latest enterprise software insights in your inbox.",
+        "description": "Get helpful software tips in your inbox.",
         "placeholder": "yourname@company.com",
         "buttonLabel": "Subscribe →"
       },
